@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="balanceLine0Mapper">
+	<resultMap type="com.zline.zlogistics.biz.dal.entity.BalanceLine0"
+		id="balanceLine0Result">
+		
+		<id property="balanceId" column="balance_id"/>
+		<result property="stationId" column="station_id" />
+		<result property="cityId" column="city_id" />
+		<result property="balancedAccount" column="balanced_account" />
+		<result property="stationBalanceStatus" column="station_balance_status" />
+		
+		<result property="dateVersion" column="data_version" />
+		<result property="isDeleted" column="is_deleted" />
+
+		<result property="createId" column="create_id" />
+		<result property="createTime" column="create_time" />
+		<result property="lastUpdateTime" column="last_update_time" />
+		<result property="lastUpdateId" column="last_update_id" />
+
+	</resultMap>
+	
+	<resultMap type="com.zline.zlogistics.biz.dal.entity.BalanceLine0"
+		id="balanceLine0TotalResult">
+		
+		<id property="balanceId" column="balance_id"/>
+		<result property="stationId" column="station_id" />
+		<result property="cityId" column="city_id" />
+		<result property="balancedAccount" column="balanced_account" />
+		<result property="dateVersion" column="data_version" />
+		<result property="isDeleted" column="is_deleted" />
+		<result property="balanceDate" column="balanceDate" />
+
+		<result property="createId" column="create_id" />
+		<result property="createTime" column="create_time" />
+		<result property="lastUpdateTime" column="last_update_time" />
+		<result property="lastUpdateId" column="last_update_id" />
+
+		<association property="city" column="city_id" select="city.queryByKey" />
+		<association property="station" column="station_id" select="DistributionStation.findById" />
+	</resultMap>
+	<insert id="insertOne" parameterType="com.zline.zlogistics.biz.dal.dto.BalanceLine0Dto">
+		INSERT INTO 
+			`zlogistics`.`logistics_order_balance_line0`
+			(	
+				station_id,city_id,balanced_account,create_time,create_id,last_update_id
+			)
+			VALUES
+			(
+				#{stationId},#{cityId},#{balancedAccount},now(),#{createId},#{lastUpdateId}
+			)
+	
+	</insert> 
+	<select id="queryCountTodayLine0BalanceToday" parameterType="com.zline.zlogistics.biz.dal.dto.BalanceLine0Dto" resultType="java.lang.Integer">
+		select count(1) 
+		FROM `zlogistics`.`logistics_order_balance_line0`
+			where 
+				city_id = #{cityId}
+				AND station_id = #{balancedStationId}
+				<![CDATA[
+			 AND create_time > concat(#{searchDate},' 00:00:00') and create_time < concat(#{searchDate},' 23:59:59')
+		]]>
+		
+	</select> 
+	
+	
+</mapper>

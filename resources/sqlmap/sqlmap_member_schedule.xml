@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberSchedule">
+	<resultMap type="com.zline.zlogistics.biz.dal.entity.MemberSchedule" id="mScheduleResult" >
+		<id property="memberScheduleId" column="memberScheduleId"/>
+		<result property="distributionStationId" column="distributionStationId"/>
+		<result property="scheduleId" column="scheduleId"/>
+		<result property="distributionMemberId" column="distributionMemberId"/>
+		<result property="scheduleDate" column="scheduleDate"/>
+		<result property="createTime" column="createTime"/>
+		<result property="createId" column="createId"/>
+		<result property="lastUpdateTime" column="lastUpdateTime"/>
+		<result property="lastUpdateId" column="lastUpdateId"/>
+		<result property="isDeleted" column="isDeleted"/>
+	</resultMap>
+	
+	
+	<select id="selectMemberScheduleCount" resultType="int" parameterType="com.zline.zlogistics.biz.dal.entity.MemberSchedule">
+	
+	   SELECT COUNT(*) FROM zlogistics.member_schedule t WHERE t.schedule_date = #{scheduleDate}
+AND t.is_deleted=0 AND distribution_member_id=#{distributionMemberId}
+	
+	</select>
+
+	<insert id="save" parameterType="com.zline.zlogistics.biz.dal.entity.MemberSchedule"
+		useGeneratedKeys="true" keyProperty="memberScheduleId">
+		insert into zlogistics.member_schedule(
+			distribution_station_id,
+			schedule_id,
+  			distribution_member_id,
+  			schedule_date,
+  			schedule_name,
+			create_time,
+			create_id,
+			last_update_time,
+			last_update_id
+		)values(
+			#{distributionStationId},
+			#{scheduleId},
+			#{distributionMemberId},
+			#{scheduleDate},
+			#{scheduleName},
+			now(),
+			0,
+			now(),
+			0
+		)
+	</insert>
+	
+	
+	<update id="deleteByScheduleId" parameterType="com.zline.zlogistics.biz.dal.entity.MemberSchedule">
+	update
+	zlogistics.member_schedule set is_deleted = #{isDeleted} where
+	schedule_id=#{scheduleId} and schedule_date>now()
+    </update>
+	<update id="updateByScheduleId" parameterType="com.zline.zlogistics.biz.dal.entity.MemberSchedule">
+		update zlogistics.member_schedule set schedule_name=#{scheduleName}
+		where schedule_id=#{scheduleId} and schedule_date>now()
+	</update>
+	
+	<update id="update" parameterType="com.zline.zlogistics.biz.dal.entity.MemberSchedule">
+		update zlogistics.member_schedule
+		<trim prefix="set" prefixOverrides=",">
+			<if test="isDeleted != null">
+				is_deleted = #{isDeleted}
+			</if>
+		</trim>
+		where member_schedule_id = #{memberScheduleId}
+	</update>
+	
+	<select id="queryList" parameterType="com.zline.zlogistics.biz.dal.entity.MemberSchedule" 
+		resultMap="mScheduleResult">
+		select 
+			member_schedule_id as memberScheduleId,
+			distribution_station_id as distributionStationId,
+			schedule_id as scheduleId,
+  			distribution_member_id as distributionMemberId,
+  			schedule_date as scheduleDate,
+			create_time as createTime,
+			create_id as createId,
+			last_update_time as lastUpdateTime,
+			last_update_id as lastUpdateId
+		from zlogistics.member_schedule 
+		<trim prefix="where" prefixOverrides="and\or">
+			is_deleted = 0
+			<if test="distributionMemberId != null">
+				and distribution_member_id = #{distributionMemberId}
+			</if>
+			<if test="scheduleDate != null and scheduleDate != ''">
+				and schedule_date = #{scheduleDate}
+			</if>
+			<if test="scheduleId != null">
+				and schedule_id = #{scheduleId}
+			</if>
+		</trim>
+		<if test="firstRow != null">
+		limit #{firstRow},#{pageRows}
+		</if>
+	</select>
+	
+	<select id="queryListCount" parameterType="com.zline.zlogistics.biz.dal.entity.MemberSchedule" 
+		resultType="int">
+		select 
+			count(*)
+		from zlogistics.member_schedule 
+		<trim prefix="where" prefixOverrides="and\or">
+			is_deleted = 0
+			<if test="distributionMemberId != null">
+				and distribution_member_id = #{distributionMemberId}
+			</if>
+			<if test="scheduleDate != null and scheduleDate != ''">
+				and schedule_date = #{scheduleDate}
+			</if>
+			<if test="scheduleId != null">
+				and schedule_id = #{scheduleId}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="findById" parameterType="long" 
+		resultMap="mScheduleResult"> 
+		select 
+			member_schedule_id as memberScheduleId,
+			distribution_station_id as distributionStationId,
+			schedule_id as scheduleId,
+  			distribution_member_id as distributionMemberId,
+  			schedule_date as scheduleDate,
+			create_time as createTime,
+			create_id as createId,
+			last_update_time as lastUpdateTime,
+			last_update_id as lastUpdateId
+		from zlogistics.member_schedule 
+		where is_deleted = 0 and member_schedule_id = #{memberScheduleId}
+	</select>
+	
+	<select id="queryHaveShifts" parameterType="com.zline.zlogistics.biz.dal.entity.MemberSchedule" 
+		resultType="String"> 
+		select 
+			GROUP_CONCAT(t2.schedule_name)
+		from zlogistics.member_schedule t1
+		join zlogistics.`schedule` t2
+		on t1.schedule_id = t2.schedule_id
+		where t1.schedule_date = #{scheduleDate} and t1.distribution_member_id =#{distributionMemberId}
+	</select>
+</mapper>

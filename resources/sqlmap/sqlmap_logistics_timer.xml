@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="logisticsTimerMapper">
+	<update id="updateOrderSendMethod">
+		UPDATE zlogistics.logistics_order t
+		SET t.send_method = 2
+		WHERE t.is_deleted = 0
+		AND t.send_status = 0
+		AND t.send_method = 1
+		AND t.create_time &gt; DATE_SUB(NOW(),INTERVAL 60 MINUTE)
+		AND t.create_time &lt; DATE_SUB(NOW(),INTERVAL 10 MINUTE)
+	</update>
+</mapper>

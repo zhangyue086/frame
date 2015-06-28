@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="login" extends="struts-default">
+		<action name="login" class="loginAction" method="userLogin">
+			<result name="loginSuccess">/welcome.jsp</result>
+			<result name="login">/html/global/login.jsp</result>
+		</action>
+		<action name="loginOut" class="loginAction" method="loginOut">
+			<result name="login">/html/global/login.jsp</result>
+		</action>
+	</package>
+
+	<package name="fatherPackage" extends="struts-default,json-default">
+		<interceptors>
+			<interceptor name="line0LoginInterceptor"
+				class="com.zline.zlogistics.web.interceptor.LoginInterceptor" />
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="line0LoginInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="mydefault"></default-interceptor-ref>
+		<global-results>
+			<result name="login">/html/global/login.jsp</result>
+			<result name="exception">/html/global/exception.jsp</result>
+		</global-results>
+	</package>
+	<package name="dispatch" extends="fatherPackage" namespace="/dispatch">
+		<action name="*_Dispatch" class="dispatchOrderAction" method="{1}">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="manual">/html/dispatch/manual_dispatch.jsp</result>
+			<result name="unresolverorder" type="json">
+				<param name="root">logisticsOrderList</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="distributionMember" type="json">
+				<param name="root">distributionMemberList</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="batchSetDM" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="index" extends="fatherPackage">
+		<action name="index" class="indexAction">
+			<result name="index">/html/index.jsp</result>
+		</action>
+	</package>
+
+	<package name="distribution" extends="fatherPackage">
+		<action name="*_station" class="distributionStationAction"
+			method="{1}">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="initlist">/html/distributioninfo/station_list.jsp</result>
+			<result name="initAdd">/html/distributioninfo/station_add.jsp</result>
+			<result name="initEdit">/html/distributioninfo/station_add.jsp</result>
+			<result name="initDelete">/html/distributioninfo/station_delete.jsp
+			</result>
+			<result name="list" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="add" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="edit" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="stationForCity" type="json">
+				<param name="root">stationList</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="update" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+		<action name="*_member" class="distributionMemberAction"
+			method="{1}">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="initlist">/html/distributioninfo/member_list.jsp</result>
+			<result name="initAdd">/html/distributioninfo/member_add.jsp</result>
+			<result name="initEdit">/html/distributioninfo/member_add.jsp</result>
+			<result name="initDelete">/html/distributioninfo/member_delete.jsp</result>
+			<result name="list" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="add" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="edit" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="schedule" extends="fatherPackage">
+		<action name="*_schedule" class="scheduleAction" method="{1}">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="initlist">/html/scheduling/schedule_list.jsp</result>
+			<result name="initAdd">/html/scheduling/schedule_add.jsp</result>
+			<result name="initEdit">/html/scheduling/schedule_edit.jsp</result>
+			<result name="initDelete">/html/scheduling/schedule_delete.jsp</result>
+			<result name="initDeleteShift">/html/scheduling/shift_delete.jsp</result>
+			<result name="initAddShift">/html/scheduling/shift_add.jsp</result>
+			<result name="initAddShiftNew">/html/scheduling/shift_add_new.jsp</result>
+			<result name="list" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="shiftlist" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="eventSource" type="json">
+				<param name="root">eventList</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="add" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="addShift" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="deleteShift" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="dateSchedule" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="memberScheduleCount" type="json">
+				<param name="root">memberScheduleCount</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+	</package>
+	<package name="memberClock" extends="fatherPackage">
+		<action name="*_memberClock" class="memberClockAction" method="{1}">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="initList">/html/memberclock/memberclock_list.jsp</result>
+			<result name="listClock" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="add" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+	</package>
+	<package name="scheduleNew" extends="fatherPackage">
+		<action name="*_scheduleNew" class="scheduleNewAction" method="{1}">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="initlist">/html/scheduling/schedule_list_new.jsp</result>
+		</action>
+	</package>
+	<package name="user" extends="fatherPackage">
+		<action name="*_user" class="userAction" method="{1}">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="initList">/html/user/user_list.jsp</result>
+		</action>
+	</package>
+
+	<package name="waybill" extends="fatherPackage" namespace="/waybill">
+		<action name="*_waybill" class="waybillAction" method="{1}">
+			<interceptor-ref name="scopedModelDriven">
+				<param name="scope">request</param>
+				<param name="name">model</param>
+				<param name="className">com.zline.zlogistics.biz.dal.dto.LogisticsOrderDto</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="init_list" type="freemarker">/html/waybill/waybill.ftl</result>
+			 <result name="init_detail" type="freemarker">/html/waybill/waybill_detail.ftl</result>
+			<result name="query_list" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+	</package>
+	<package name="balance" extends="fatherPackage" namespace="/balance">
+		<action name="*_memberBalance" class="balanceMemberAction"
+			method="{1}">
+			<interceptor-ref name="scopedModelDriven">
+				<param name="scope">request</param>
+				<param name="name">model</param>
+				<param name="className">com.zline.zlogistics.biz.dal.dto.BalanceMemberDto</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="init_balance" type="freemarker">/html/balance/balance_member.ftl
+			</result>
+			<result name="init_balance_member_detail" type="freemarker">/html/balance/balance_member_detail.ftl
+			</result>
+			<result name="json_order" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="msg_json" type="json">
+				<param name="root">message</param>
+			</result>
+			<result name="sta_json" type="json">
+				<param name="root">stationList</param>
+			</result>
+		</action>
+		<action name="*_line0Balance" class="balanceLine0Action"
+			method="{1}">
+			<interceptor-ref name="scopedModelDriven">
+				<param name="scope">request</param>
+				<param name="name">model</param>
+				<param name="className">com.zline.zlogistics.biz.dal.dto.BalanceLine0Dto</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="init_balance" type="freemarker">/html/balance/balance_line0.ftl
+			</result>
+			<result name="msg_json" type="json">
+				<param name="root">message</param>
+			</result>
+			<result name="sta_json" type="json">
+				<param name="root">stationList</param>
+			</result>
+			<result name="dt_json" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+	</package>
+	<package name="loss" extends="fatherPackage" namespace="/loss">
+		<action name="*_loss" class="lossAction" method="{1}">
+			<interceptor-ref name="scopedModelDriven">
+				<param name="scope">request</param>
+				<param name="name">model</param>
+				<param name="className">com.zline.zlogistics.biz.dal.dto.OrderLossDto</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="init_list" type="freemarker">/html/loss/loss.ftl</result>
+			<result name="loss_detail" type="freemarker">/html/loss/loss_detail.ftl
+			</result>
+			<result name="table_json" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="msg_json" type="json">
+				<param name="root">message</param>
+			</result>
+		</action>
+	</package>
+	<package name="attendance" extends="fatherPackage" namespace="/attendance">
+		<action name="*_attendance" class="attendanceAction" method="{1}">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="initList">/html/attendance/attendance_list_bak.jsp</result>
+			<result name="init_list">/html/attendance/attendance_list.jsp</result>
+			<result name="list" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="scheduleList" type="json">
+				<param name="root">scheduleList</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="pushCard" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="overTime" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="leaveAdd" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+	</package>
+</struts>

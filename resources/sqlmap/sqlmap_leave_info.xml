@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LeaveInfo">
+	<resultMap type="com.zline.zlogistics.biz.dal.entity.LeaveInfo" id="leaveResult" >
+		<id property="leaveInfoId" column="leaveInfoId"/>
+		<result property="leaveInfoDate" column="leaveInfoDate"/>
+		<result property="leaveInfoMask" column="leaveInfoMask"/>
+		<result property="distributionMemberId" column="distributionMemberId"/>
+		<result property="createTime" column="createTime"/>
+		<result property="createId" column="createId"/>
+		<result property="lastUpdateTime" column="lastUpdateTime"/>
+		<result property="lastUpdateId" column="lastUpdateId"/>
+		<result property="isDeleted" column="isDeleted"/>
+	</resultMap>
+	
+	<insert id="save" parameterType="com.zline.zlogistics.biz.dal.entity.LeaveInfo"
+		useGeneratedKeys="true" keyProperty="leaveInfoId">
+		insert into zlogistics.member_leave_info(
+			leave_info_date,
+			leave_info_time,
+			distribution_member_id,
+			create_time,
+			create_id,
+			last_update_time,
+			last_update_id
+		)values(
+			#{leaveInfoDate},
+			#{leaveInfoTime},
+			#{distributionMemberId},
+			now(),
+			0,
+			now(),
+			0
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.zline.zlogistics.biz.dal.entity.LeaveInfo">
+		update zlogistics.member_leave_info
+		<trim prefix="set" prefixOverrides=",">
+			<if test="isDeleted != null">
+				is_deleted = #{isDeleted}
+			</if>
+		</trim>
+		where leave_info_id = #{leaveInfoId}
+	</update>
+	
+	<select id="queryList" parameterType="com.zline.zlogistics.biz.dal.entity.LeaveInfo" 
+		resultMap="leaveResult">
+		select 
+			leave_info_id as leaveInfoId,
+			leave_info_date as leaveInfoDate,
+			leave_info_mask as leaveInfoMask,
+			distribution_member_id as distributionMemberId,
+			create_time as createTime,
+			create_id as createId,
+			last_update_time as lastUpdateTime,
+			last_update_id as lastUpdateId
+		from zlogistics.member_leave_info 
+		<trim prefix="where" prefixOverrides="and\or">
+			is_deleted = 0
+			<if test="distributionMemberId != null">
+				and distribution_member_id = #{distributionMemberId}
+			</if>
+			<if test="leaveInfoDate != null and leaveInfoDate != ''">
+				and leave_info_date = #{leaveInfoDate}
+			</if>
+		</trim>
+		<if test="firstRow != null">
+		limit #{firstRow},#{pageRows}
+		</if>
+	</select>
+	
+	<select id="queryListCount" parameterType="com.zline.zlogistics.biz.dal.entity.LeaveInfo" 
+		resultType="int">
+		select 
+			count(*)
+		from zlogistics.member_leave_info 
+		<trim prefix="where" prefixOverrides="and\or">
+			is_deleted = 0
+			<if test="distributionMemberId != null">
+				and distribution_member_id = #{distributionMemberId}
+			</if>
+			<if test="leaveInfoDate != null and leaveInfoDate != ''">
+				and leave_info_date = #{leaveInfoDate}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="findById" parameterType="long" 
+		resultMap="leaveResult"> 
+		select 
+			leave_info_id as leaveInfoId,
+			leave_info_date as leaveInfoDate,
+			leave_info_mask as leaveInfoMask,
+			distribution_member_id as distributionMemberId,
+			create_time as createTime,
+			create_id as createId,
+			last_update_time as lastUpdateTime,
+			last_update_id as lastUpdateId
+		from zlogistics.member_leave_info 
+		where is_deleted = 0 and leave_info_id = #{leaveInfoId}
+	</select>
+</mapper>

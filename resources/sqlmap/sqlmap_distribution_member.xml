@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DistributionMember">
+	<resultMap type="com.zline.zlogistics.biz.dal.entity.DistributionMember" id="memberResult" >
+		<id column="distribution_member_id" property="distributionMemberId"/>
+		<result column="work_number" property="workNumber"/>
+		<result column="city_id" property="cityId"/>
+		<result column="distribution_station_id" property="distributionStationId"/>
+		<result column="distribution_station_name" property="distributionStationName"/>
+		<result column="distribution_member_name" property="distributionMemberName"/>
+		<result column="mobile" property="mobile"/>
+		<result column="status" property="status"/>
+		<result column="password" property="password"/>
+		<result column="city_name" property="cityName"/>
+		<result column="createTime" property="createTime"/>
+		<result column="createId" property="createId"/>
+		<result column="lastUpdateTime" property="lastUpdateTime"/>
+		<result column="lastUpdateId" property="lastUpdateId"/>
+		<result column="isDeleted" property="isDeleted"/>
+		<result column="clock_status" property="clockStatus"/>
+	</resultMap>
+
+  <select id="selectScheduleMember" resultMap="memberResult"
+	parameterType="com.zline.zlogistics.biz.dal.entity.Schedule">
+	SELECT t1.distribution_member_id
+FROM zlogistics.member_schedule t1
+WHERE t1.is_deleted = 0
+    AND t1.schedule_id = #{scheduleId}
+     AND t1.schedule_date = #{scheduleDate}
+	</select>
+
+	<select id="selectRepeatMember" resultMap="memberResult"
+		parameterType="com.zline.zlogistics.biz.dal.entity.Schedule">
+		SELECT
+  t2.distribution_member_id
+FROM zlogistics.member_schedule t2
+WHERE t2.is_deleted = 0
+    AND t2.schedule_date = #{scheduleDate}
+    AND t2.schedule_id IN(SELECT
+                            t1.schedule_id
+                          FROM zlogistics.schedule t1
+                          WHERE t1.is_deleted = 0
+                              AND t1.distribution_station_id = #{distributionStationId}
+                              AND ((t1.schedule_start &lt; #{scheduleStart}
+                                    AND t1.schedule_end &gt; #{scheduleStart})
+                                    OR (t1.schedule_start &lt; #{scheduleEnd}
+                                        AND t1.schedule_end &gt; #{scheduleEnd})
+                                    OR (t1.schedule_start &lt; #{scheduleStart}
+                                        AND t1.schedule_end &gt; #{scheduleEnd})
+                                    OR (t1.schedule_start &gt; #{scheduleStart}
+                                        AND t1.schedule_end &lt; #{scheduleEnd})))
+	</select>
+	<select id="selectAllMember" resultMap="memberResult"
+		parameterType="com.zline.zlogistics.biz.dal.entity.Schedule">
+		
+	SELECT t1.distribution_member_id,
+       t1.distribution_member_name 
+FROM zlogistics.distribution_member t1
+WHERE t1.is_deleted = 0
+    AND t1.distribution_station_id = #{distributionStationId}
+    AND t1.status IN(1,2)
+	</select>
+
+
+
+
+
+
+	<insert id="save" parameterType="com.zline.zlogistics.biz.dal.entity.DistributionMember"
+		useGeneratedKeys="true" keyProperty="distributionMemberId">
+		insert into zlogistics.distribution_member(
+			work_number,
+			city_id,
+			distribution_station_id,
+			distribution_member_name,
+			status,
+			mobile,
+			password,
+			create_time,
+			create_id,
+			last_update_time,
+			last_update_id
+		)values(
+			#{workNumber},
+			#{cityId},
+			#{distributionStationId},
+			#{distributionMemberName},
+			#{status},
+			#{mobile},
+			password(#{password}),
+			now(),
+			0,
+			now(),
+			0
+		)
+	</insert>
+	<update id="updateWorkNumber" parameterType="com.zline.zlogistics.biz.dal.entity.DistributionMember">
+		update zlogistics.distribution_member
+			set	work_number = #{workNumber}
+		where distribution_member_id = #{distributionMemberId}
+	</update>
+	
+	
+	<update id="update" parameterType="com.zline.zlogistics.biz.dal.entity.DistributionMember">
+		update zlogistics.distribution_member
+		<trim prefix="set" prefixOverrides=",">
+			<if test="status != null   and status != ''">
+				status = #{status}
+			</if>
+			<if test="cityId != null  ">
+				,city_id = #{cityId}
+			</if>
+			<if test="clockStatus != null  ">
+				,clock_status = #{clockStatus}
+			</if>
+			<if test="distributionStationId != null">
+				,distribution_station_id = #{distributionStationId}
+			</if>
+			<if test="mobile != null   and mobile != ''">
+				,mobile = #{mobile}
+			</if>
+			<if test="password != null   and password != ''">
+				,password = password(#{password})
+			</if>
+			<if test="isDeleted != null   and isDeleted != '' ">
+				,is_deleted = #{isDeleted}
+			</if>
+		</trim>
+		where distribution_member_id = #{distributionMemberId}
+	</update>
+	
+	<select id="queryList" parameterType="com.zline.zlogistics.biz.dal.entity.DistributionMember" 
+		resultMap="memberResult">
+		select 
+			t1.distribution_member_id as distributionMemberId,
+			t1.distribution_member_name as distributionMemberName,
+			t1.work_number as workNumber,
+			t1.mobile as mobile,
+			t1.status as status,
+			t1.city_id as cityId,
+			t3.city_name as cityName,
+			t1.distribution_station_id as distributionStationId,
+			t2.distribution_station_name as distributionStationName,
+			t1.create_time as createTime,
+			t1.create_id as createId,
+			t1.last_update_time as lastUpdateTime,
+			t1.last_update_id as lastUpdateId
+		from zlogistics.distribution_member t1
+		 join zlogistics.distribution_station t2
+		on t1.distribution_station_id = t2.distribution_station_id
+		 join zlogistics.city t3
+		on t1.city_id = t3.city_id
+		<trim prefix="where" prefixOverrides="and\or">
+			t1.is_deleted = 0
+			<if test="distributionMemberName != null and distributionMemberName != ''">
+				and t1.distribution_member_name like concat('%',#{distributionMemberName},'%')
+			</if>
+			<if test="workNumber != null and workNumber != ''">
+				and t1.work_number =#{workNumber}
+			</if>
+			<if test="cityId != null">
+				and t1.city_id = #{cityId}
+			</if>
+			<if test="distributionStationId != null ">
+				and t1.distribution_station_id = #{distributionStationId}
+			</if>
+			<if test="statusList != null">
+				and t1.status in
+				<foreach item="item" index="index" collection="statusList" open="("
+					separator="," close=")">
+					#{item}
+				</foreach>
+           </if>
+		</trim>
+		<if test="firstRow != null">
+		limit #{firstRow},#{pageRows}
+		</if>
+	</select>
+	
+	<select id="queryListCount" parameterType="com.zline.zlogistics.biz.dal.entity.DistributionMember" 
+		resultType="int">
+		select 
+			count(*)
+		from zlogistics.distribution_member t1
+		 join zlogistics.distribution_station t2
+		on t1.distribution_station_id = t2.distribution_station_id
+		 join zlogistics.city t3
+		on t1.city_id = t3.city_id
+		<trim prefix="where" prefixOverrides="and\or">
+			t1.is_deleted = 0
+			<if test="distributionMemberName != null and distributionMemberName != ''">
+				and t1.distribution_member_name like concat('%',#{distributionMemberName},'%')
+			</if>
+			<if test="workNumber != null and workNumber != ''">
+				and t1.work_number =#{workNumber}
+			</if>
+			<if test="cityId != null">
+				and t1.city_id = #{cityId}
+			</if>
+			<if test="distributionStationId != null">
+				and t1.distribution_station_id = #{distributionStationId}
+			</if>
+			<if test="statusList != null">
+				and t1.status in
+				<foreach item="item" index="index" collection="statusList" open="("
+					separator="," close=")">
+					#{item}
+				</foreach>
+           </if>
+		</trim>
+	</select>
+	
+	<select id="findById" parameterType="long" 
+		resultMap="memberResult"> 
+		select 
+			t1.distribution_member_id as distributionMemberId,
+			t1.distribution_member_name as distributionMemberName,
+			t1.clock_status as clockStatus,
+			t1.work_number as workNumber,
+			t1.mobile as mobile,
+			t1.status as status,
+			t1.password as password,
+			t1.city_id as cityId,
+			t1.distribution_station_id as distributionStationId,
+			t1.create_time as createTime,
+			t1.create_id as createId,
+			t1.last_update_time as lastUpdateTime,
+			t1.last_update_id as lastUpdateId
+		from zlogistics.distribution_member t1
+		where t1.is_deleted = 0 and t1.distribution_member_id = #{distributionMemberId}
+	</select>
+ 	<select id="findByWorkNubmer" parameterType="java.lang.Long" 
+		resultMap="memberResult"> 
+		select 
+			t1.distribution_member_id as distributionMemberId,
+			t1.clock_status as clockStatus,
+			t1.distribution_station_id as distributionStationId,
+			t1.distribution_member_name as distributionMemberName,
+			t1.work_number as workNumber,
+			t2.city_name as cityName,
+			t3.distribution_station_name as distributionStationName
+		from zlogistics.distribution_member t1
+		join zlogistics.city t2
+		on t1.city_id = t2.city_id
+		join zlogistics.distribution_station t3 
+		on t1.distribution_station_id = t3.distribution_station_id
+		where t1.is_deleted = 0 and t1.work_number = #{workNumber}
+		and t2.is_deleted = 0 and t3.is_deleted = 0
+	</select> 
+	
+	<select id="findMaxId" resultType="int">
+		select IFNULL(MAX(distribution_member_id),0) from zlogistics.distribution_member
+	</select>
+</mapper>

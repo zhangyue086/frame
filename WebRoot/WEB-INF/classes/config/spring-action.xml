@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd 
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+	default-autowire="byName">
+
+	<bean id="loginAction" class="com.zline.zlogistics.web.action.LoginAction" scope="prototype"></bean>
+	<bean id="indexAction" class="com.zline.zlogistics.web.action.IndexAction" scope="prototype"></bean>
+	<bean id="distributionMemberAction" class="com.zline.zlogistics.web.action.DistributionMemberAction" scope="prototype"></bean>
+	<bean id="distributionStationAction" class="com.zline.zlogistics.web.action.DistributionStationAction" scope="prototype"></bean>
+	<bean id="scheduleAction" class="com.zline.zlogistics.web.action.ScheduleAction" scope="prototype"></bean>
+	<bean id="scheduleNewAction" class="com.zline.zlogistics.web.action.ScheduleNewAction" scope="prototype"></bean>
+	<bean id="attendanceAction" class="com.zline.zlogistics.web.action.AttendanceAction" scope="prototype"></bean>
+	<bean id="waybillAction" class="com.zline.zlogistics.web.action.WaybillAction" scope="prototype"></bean>
+	<bean id="balanceMemberAction" class="com.zline.zlogistics.web.action.BalanceMemberAction" scope="prototype"></bean>
+	<bean id="balanceLine0Action" class="com.zline.zlogistics.web.action.BalanceLine0Action" scope="prototype"></bean>
+	<bean id="lossAction" class="com.zline.zlogistics.web.action.LossAction" scope="prototype"></bean>
+    <bean id="dispatchOrderAction" class="com.zline.zlogistics.web.action.DispatchOrderAction" scope="prototype"></bean>
+	<bean id="memberClockAction" class="com.zline.zlogistics.web.action.MemberClockAction" scope="prototype"></bean>
+	<bean id="userAction" class="com.zline.zlogistics.web.action.UserAction" scope="prototype"></bean>
+	
+
+</beans>

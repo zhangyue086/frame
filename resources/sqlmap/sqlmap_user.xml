@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+	<select id="selectUserByUserName" parameterType="com.zline.zlogistics.biz.dal.entity.User" resultType="com.zline.zlogistics.biz.dal.entity.User">
+	
+	   SELECT
+  user_id    AS userId,
+  user_name  AS userName,
+  name       as name,
+  mobile     AS mobile,
+  city_id    AS cityId,
+  station_id AS stationId
+FROM zlogistics.user t
+WHERE t.is_deleted = 0
+    AND t.user_name = #{userName}
+    AND t.user_password = PASSWORD(#{passWord})
+	
+	</select>
+</mapper>
