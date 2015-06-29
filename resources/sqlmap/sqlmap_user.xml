@@ -2,6 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
+
+<resultMap type="com.zline.zlogistics.biz.dal.entity.User" id="userResult" >
+		<id column="user_id" property="userId"/>
+		<result column="city_id" property="cityId"/>
+		<result column="station_id" property="stationId"/>
+		<result column="user_name" property="userName"/>
+		<result column="name" property="name"/>
+		<result column="user_password" property="passWord"/>
+		<result column="createTime" property="createTime"/>
+		<result column="createId" property="createId"/>
+		<result column="lastUpdateTime" property="lastUpdateTime"/>
+		<result column="lastUpdateId" property="lastUpdateId"/>
+		<result column="isDeleted" property="isDeleted"/>
+	</resultMap>
+
+
+
+
+
+
 	<select id="selectUserByUserName" parameterType="com.zline.zlogistics.biz.dal.entity.User" resultType="com.zline.zlogistics.biz.dal.entity.User">
 	
 	   SELECT
@@ -17,4 +37,124 @@ WHERE t.is_deleted = 0
     AND t.user_password = PASSWORD(#{passWord})
 	
 	</select>
+	
+	
+	<insert id="save" parameterType="com.zline.zlogistics.biz.dal.entity.User"
+		useGeneratedKeys="true" keyProperty="userId">
+		insert into zlogistics.user(
+			user_id,
+			user_name,
+			name,
+			city_id,
+			station_id,
+			mobile,
+			user_password,
+			create_time,
+			create_id,
+			last_update_time,
+			last_update_id,
+			is_deleted
+		)values(
+			#{userId},
+			#{userName},
+			#{name},
+			#{cityId},
+			#{stationId},
+			#{mobile},
+			password(#{passWord}),
+			now(),
+			0,
+			now(),
+			0,
+			0
+		)
+	</insert>
+	
+	
+	
+	<select id="queryList" parameterType="com.zline.zlogistics.biz.dal.entity.User" 
+		resultMap="userResult">
+		select 
+			t1.user_id as userId,
+			t1.user_name as userName,
+			t1.name as name,
+			t1.station_id as stationId,
+			t1.user_password as passWord,
+			t1.city_id as cityId,
+			t1.create_time as createTime,
+			t1.create_id as createId,
+			t1.mobile as mobile,
+			t1.last_update_time as lastUpdateTime,
+			t1.last_update_id as lastUpdateId,
+			t1.is_deleted
+		from zlogistics.user t1
+		 join zlogistics.distribution_station t2
+		on t1.station_id = t2.distribution_station_id
+		 join zlogistics.city t3
+		on t1.city_id = t3.city_id
+		<trim prefix="where" prefixOverrides="and\or">
+			t1.is_deleted = 0
+			<if test="userName != null and userName != ''">
+				and t1.user_name like concat('%',#{userName},'%')
+			</if>
+			<if test="name != null and name != ''">
+				and t1.name like concat('%',#{name},'%')
+			</if>
+			<if test="userId != null and userId != ''">
+				and t1.user_id =#{userId}
+			</if>
+			<if test="cityId != null">
+				and t1.city_id = #{cityId}
+			</if>
+			<if test="stationId != null ">
+				and t1.station_id = #{stationId}
+			</if>
+			
+		</trim>
+		<if test="firstRow != null">
+		limit #{firstRow},#{pageRows}
+		</if>
+	</select>
+	
+	<select id="queryListCount" parameterType="com.zline.zlogistics.biz.dal.entity.User" 
+		resultType="int">
+		select 
+			count(*)
+		from zlogistics.user t1
+		 join zlogistics.distribution_station t2
+		on t1.station_id = t2.distribution_station_id
+		 join zlogistics.city t3
+		on t1.city_id = t3.city_id
+		<trim prefix="where" prefixOverrides="and\or">
+			t1.is_deleted = 0
+			<if test="userName != null and userName != ''">
+				and t1.user_name like concat('%',#{userName},'%')
+			</if>
+			<if test="name != null and name != ''">
+				and t1.name like concat('%',#{name},'%')
+			</if>
+			<if test="userId != null and userId != ''">
+				and t1.user_id =#{userId}
+			</if>
+			<if test="cityId != null">
+				and t1.city_id = #{cityId}
+			</if>
+			<if test="stationId != null ">
+				and t1.station_id = #{stationId}
+			</if>
+			
+		</trim>
+		<if test="firstRow != null">
+		limit #{firstRow},#{pageRows}
+		</if>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

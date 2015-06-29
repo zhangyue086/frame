@@ -16,18 +16,18 @@ import com.zline.zlogistics.biz.dal.entity.User;
 public class UserContext
 {
 
-	public final static String USER = "user";
+	public final static String LoginEntity = "loginEntity";
 
 	public static User getUser()
 	{
-		User user = (User) ServletActionContext.getRequest().getSession()
-				.getAttribute(USER);
-		return user;
+		User loginEntity = (User) ServletActionContext.getRequest().getSession()
+				.getAttribute(LoginEntity);
+		return loginEntity;
 	}
 
-	public static void saveUser(User user)
+	public static void saveUser(User loginEntity)
 	{
-		ServletActionContext.getRequest().getSession().setAttribute(USER, user);
+		ServletActionContext.getRequest().getSession().setAttribute(LoginEntity, loginEntity);
 	}
 
 }

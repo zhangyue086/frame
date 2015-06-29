@@ -74,7 +74,7 @@ request.setAttribute("path",rc);
 								<div class="control-group">
 								<label class="control-label">&nbsp;</label>
 								<div class="controls">
-								<a href="#" data-url="" class="btn green" id="addUserInit"><i class="icon-pencil"></i>添加用户</a>
+								<a href="#" data-url="initAdd_user.do" class="btn green" id="addUserInit"><i class="icon-pencil"></i>添加用户</a>
 								</div>
 								</div>
 							</div>
@@ -107,13 +107,16 @@ request.setAttribute("path",rc);
 var otable;
 $('#search').click(function(){
 	otable.fnSettings().ajax={
-		"url": "?now=" + new Date().getTime(),
+		"url": "list_user.do?now=" + new Date().getTime(),
         "type": "POST",
         "data":{
+	        /*
         	 "station.cityId": $('#cityName').find("option:selected").val()
+       	 */
 	}};
 	otable.fnDraw();
 });
+
 jQuery(document).ready(function() { 
 	App.initUniform();
 	otable = $('#mydemo').dataTable({
@@ -123,24 +126,26 @@ jQuery(document).ready(function() {
         "bFilter": false,
         "bSort": false,
         "ajax": {
-            "url": "?now=" + new Date().getTime(),
+            "url": "list_user.do?now=" + new Date().getTime(),
             "type": "POST",
             "data":{
+                /**
             	 "station.cityId": $('#cityName').find("option:selected").val()
+           	 */
             }
         },
         "columns": [
-                    {"data":"","bVisible":false},
-                    {"data": ""},
-                    {"data": ""},
-                    {"data": ""},
-                    {"data": ""},
-                    {"data": ""}
+                    {"data":"userId","bVisible":false},
+                    {"data": "userName"},
+                    {"data": "name"},
+                    {"data": "mobile"},
+                    {"data": "createTime"},
+                    {"data": "lastUpdateTime"}
                   ],
         "columnDefs": [
                        {
                            "targets": [6],
-                           "data": "",
+                           "data": "userId",
                            "render": function(data, type, full) {
                         	 var html = "<a class='btn mini purple' id='editUserInit'  href='#' data-url='initEdit_user.do?id="+data+"'><i class='icon-edit'></i>修改</a>&nbsp;";
                         	 html+= "<a class='btn mini red' id='deleteUserInit' data-toggle='modal' href='#myModal' data-url='initDelete_user.do?id="+data+"'><i class='icon-trash'></i>删除</a>";
@@ -149,6 +154,11 @@ jQuery(document).ready(function() {
                          }
                      ]
     });
+
+
+
+
+    
 	$("#addUserInit").click(function(){
 	    loadHtml($(this).attr("data-url"));
 	});
@@ -156,9 +166,12 @@ jQuery(document).ready(function() {
 	$("#editUserInit").die().live('click',function(event){
 	    loadHtml($(this).attr("data-url"));
 	});
+	
 	$("#deleteUserInit").die().live('click',function(){
 	    $("#myModal").load($(this).attr("data-url"));
 	});
+
+	
 	$("#cityName").select2({
 		placeholder: "选择城市",
         allowClear: true

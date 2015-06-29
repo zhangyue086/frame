@@ -17,7 +17,7 @@ import com.zline.zlogistics.ws.member.IMemberAppService;
  */
 public class MemberAppServiceImpl implements IMemberAppService {
 
-	public String checkLogin(String paramJSON) {
+	/*public String checkLogin(String paramJSON) {
 		
 		AppParam inParam = JSON.parseObject(paramJSON, AppParam.class);
 		
@@ -27,7 +27,7 @@ public class MemberAppServiceImpl implements IMemberAppService {
 		result.setStatus("0");
 		
 		return JSON.toJSONString(result);
-	}
+	}*/
 
 
 }

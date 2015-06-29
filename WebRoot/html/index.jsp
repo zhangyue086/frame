@@ -13,7 +13,7 @@ request.setAttribute("path",rc);
 <!-- BEGIN HEAD -->
 <head>
 	<meta charset="utf-8" />
-	<title>零号线物流系统</title>
+	<title>后台基础框架</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -83,7 +83,7 @@ request.setAttribute("path",rc);
 					<li class="dropdown user">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<img alt="" src="${path}/media/image/avatar.png" />
-						<span class="username">${userName} </span>
+						<span class="username">${loginEntity.name} </span>
 						<i class="icon-angle-down"></i>
 						</a>
 						<ul class="dropdown-menu">

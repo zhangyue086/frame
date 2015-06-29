@@ -34,9 +34,21 @@ public class DateUtils {
 	    return list;  
 	}
 	
-	
+	/**
+	 * yyyy-MM-dd HH:mm:ss
+	 * @param createTime
+	 * @param string
+	 * @return
+	 */
 	public static Object dateToString(Date createTime, String string) {
-		
-		return null;
+		SimpleDateFormat sdf = new SimpleDateFormat(string);
+		String dateStr = sdf.format(createTime);
+		return dateStr;
 	}  
+	
+	
+	
+	public static void main(String[] args) {
+		System.out.println(dateToString(new Date(),"yyyy-MM-dd HH:mm:ss"));
+	}
 }
