@@ -95,12 +95,13 @@ public class UserAction extends BaseAction
 		return "add";
 	}
 	
+	
 	public String initEdit(){
-		Long id = member.getDistributionMemberId();
-		member = distributionMemberService.findById(id);
+		Long id = user.getUserId();
+		user = userService.findById(id);
 		cityList = cityService.queryList();
 		DistributionStation dis = new DistributionStation();
-		dis.setCityId(member.getCityId());
+		user.setCityId(user.getCityId());
 		stationList = distributionStationService.queryList(dis);
 		return "initEdit";
 	}
@@ -109,21 +110,21 @@ public class UserAction extends BaseAction
 		message = new Message();
 		message.setIsSuccess(true);
 		try {
-			if(member.getPassword()!=null&&member.getPassword().length()>0&& !member.getPassword().matches("[0-9a-zA-Z]+")){
+			if(user.getPassWord()!=null&&user.getPassWord().length()>0&& !user.getPassWord().matches("[0-9a-zA-Z]+")){
 				message.setIsSuccess(false);
 				return "edit";
 			}
-			distributionMemberService.updateMember(member);
+			userService.updateUser(user);
 		} catch (Exception e) {
 			message.setIsSuccess(false);
-			log.error("编辑配送员失败"+e.getMessage());
+			log.error("编辑用户失败"+e.getMessage());
 		}
 		return "edit";
 	}
 	
 	public String initDelete(){
-		Long id = member.getDistributionMemberId();
-		member = distributionMemberService.findById(id);
+		Long id = user.getUserId();
+		user = userService.findById(id);
 		return "initDelete";
 	}
 	
@@ -131,12 +132,12 @@ public class UserAction extends BaseAction
 		message = new Message();
 		message.setIsSuccess(true);
 		try {
-			member.setIsDeleted(1);
-			member.setLastUpdateTime(new Date());
-			distributionMemberService.updateMember(member);
+			user.setIsDeleted(1);
+			user.setLastUpdateTime(new Date());
+			userService.updateUser(user);
 		} catch (Exception e) {
 			message.setIsSuccess(false);
-			log.error("删除配送员失败"+e.getMessage());
+			log.error("删除用户失败"+e.getMessage());
 		}
 		return "delete";
 	}
@@ -251,6 +252,14 @@ public class UserAction extends BaseAction
 
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
+	}
+
+	public DataTableReturnObject<User> getReturnObject() {
+		return returnObject;
+	}
+
+	public void setReturnObject(DataTableReturnObject<User> returnObject) {
+		this.returnObject = returnObject;
 	}
 
 	

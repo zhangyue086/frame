@@ -147,15 +147,13 @@ jQuery(document).ready(function() {
                            "targets": [6],
                            "data": "userId",
                            "render": function(data, type, full) {
-                        	 var html = "<a class='btn mini purple' id='editUserInit'  href='#' data-url='initEdit_user.do?id="+data+"'><i class='icon-edit'></i>修改</a>&nbsp;";
-                        	 html+= "<a class='btn mini red' id='deleteUserInit' data-toggle='modal' href='#myModal' data-url='initDelete_user.do?id="+data+"'><i class='icon-trash'></i>删除</a>";
+                        	 var html = "<a class='btn mini purple' id='editUserInit'  href='#' data-url='initEdit_user.do?user.userId="+data+"'><i class='icon-edit'></i>修改</a>&nbsp;";
+                        	 html+= "<a class='btn mini red' id='deleteUserInit' data-toggle='modal' href='#myModal' data-url='initDelete_user.do?user.userId="+data+"'><i class='icon-trash'></i>删除</a>";
                              return html;
                            }
                          }
                      ]
     });
-
-
 
 
     

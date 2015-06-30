@@ -18,7 +18,7 @@ public class UserServiceImpl extends BaseService implements IUserService
 
 	@Override
 	public User findById(Long id) {
-		return null;
+		return this.getBaseDao().selectOne("user.findById",id);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class UserServiceImpl extends BaseService implements IUserService
 
 	@Override
 	public void updateUser(User user) {
-		
+		getBaseDao().update("user.update", user);
 	}
 
 }

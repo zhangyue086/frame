@@ -203,7 +203,7 @@
 			
 			<!-- yuezhang add -->
 			<result name="initAdd">/html/user/user_add.jsp</result>
-			<result name="initEdit">/html/user/user_edit.jsp</result>
+			<result name="initEdit">/html/user/user_add.jsp</result>
 			<result name="initDelete">/html/user/user_delete.jsp</result>
 			
 			<result name="list" type="json">

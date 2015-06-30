@@ -39,6 +39,31 @@ WHERE t.is_deleted = 0
 	</select>
 	
 	
+	<select id="findById" parameterType="long" 
+		resultMap="userResult"> 
+		select 
+			t1.user_id as userId,
+			t1.user_name as userName,
+			t1.name as name,
+			t1.station_id as stationId,
+			t1.user_password as passWord,
+			t1.city_id as cityId,
+			t1.create_time as createTime,
+			t1.create_id as createId,
+			t1.mobile as mobile,
+			t1.last_update_time as lastUpdateTime,
+			t1.last_update_id as lastUpdateId,
+			t1.is_deleted
+		from zlogistics.user t1
+		 join zlogistics.distribution_station t2
+		on t1.station_id = t2.distribution_station_id
+		 join zlogistics.city t3
+		on t1.city_id = t3.city_id
+		where t1.is_deleted = 0 and t1.user_id = #{userId}
+	</select>
+	
+	
+	
 	<insert id="save" parameterType="com.zline.zlogistics.biz.dal.entity.User"
 		useGeneratedKeys="true" keyProperty="userId">
 		insert into zlogistics.user(
@@ -150,6 +175,30 @@ WHERE t.is_deleted = 0
 	</select>
 	
 	
+	<update id="update" parameterType="com.zline.zlogistics.biz.dal.entity.User">
+		update zlogistics.user
+		<trim prefix="set" prefixOverrides=",">
+			<if test="name != null   and name != ''">
+				name = #{name}
+			</if>
+			<if test="cityId != null  ">
+				,city_id = #{cityId}
+			</if>
+			<if test="stationId != null">
+				,station_id = #{stationId}
+			</if>
+			<if test="mobile != null   and mobile != ''">
+				,mobile = #{mobile}
+			</if>
+			<if test="passWord != null   and passWord != ''">
+				,user_password = password(#{passWord})
+			</if>
+			<if test="isDeleted != null   and isDeleted != '' ">
+				,is_deleted = #{isDeleted}
+			</if>
+		</trim>
+		where user_id = #{userId}
+	</update>
 	
 	
 	
