@@ -107,7 +107,7 @@ request.setAttribute("path",rc);
 							<td>${menu.createTime}</td>
 							<td>${menu.lastUpdateTime}</td>
 							<td>
-							<a class='btn mini purple' id='editMenuInit'  href='#' data-url='initEdit_menu.do?menu.menuId=${menu.menuId}'><i class='icon-edit'></i>修改</a>
+							<a class='btn mini purple' id='editMenuInit'  data-toggle='modal' href='#myModal' data-url='initEdit_menu.do?menu.menuId=${menu.menuId}'><i class='icon-edit'></i>修改</a>
 							<a class='btn mini red' id='deleteMenuInit' data-toggle='modal' href='#myModal' data-url='initDelete_menu.do?menu.menuId=${menu.menuId}'><i class='icon-trash'></i>删除</a>
 							</td>
 						</tr>
@@ -133,7 +133,7 @@ request.setAttribute("path",rc);
 	});
 	
 	$("#editMenuInit").die().live('click',function(event){
-	    loadHtml($(this).attr("data-url"));
+	   $("#myModal").load($(this).attr("data-url"));
 	});
 	
 	$("#deleteMenuInit").die().live('click',function(){

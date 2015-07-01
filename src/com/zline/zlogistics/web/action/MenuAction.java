@@ -34,7 +34,21 @@ public class MenuAction extends BaseAction
 	public String initEdit(){
 		Long id = menu.getMenuId();
 		menu = menuService.findById(id);
-		return "initDelete";
+		return "initEdit";
+	}
+	
+	public String edit(){
+		
+		message = new Message();
+		message.setIsSuccess(true);
+		try {
+			menu.setLastUpdateTime(new Date());
+			menuService.updateMenu(menu);
+		} catch (Exception e) {
+			message.setIsSuccess(false);
+			log.error("编辑菜单失败"+e.getMessage());
+		}
+		return "edit";
 	}
 	
 	public String delete(){

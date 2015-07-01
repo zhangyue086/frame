@@ -9,7 +9,6 @@ request.setAttribute("path",rc);
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="${path}/js/menu.form.js"></script>
 </head>
 <body>
 <div class="modal-header">
@@ -72,17 +71,30 @@ request.setAttribute("path",rc);
 </body>
 <script>
 
-/**
-jQuery(document).ready(function() {    
-	ScheduleAdd.init();
-	$("#scheduleStationId").val($("#hiddenStation").val());
-	$("#scheduleStart").inputmask("mask", {"mask": "99:99"});
-	$("#scheduleEnd").inputmask("mask", {"mask": "99:99"});
-});
-*/
-
-function menuAdd(){
-	$("#menuAddForm").submit();
-}
+	function menuAdd(){
+		$("#menuAddForm").submit();
+		
+		//loadHtml('http://localhost:8080/menu/initList_menu.do');
+		var param = $("#menuAddForm").serialize(); 
+				     $.ajax({ 
+						url : 'edit_menu.do', 
+						type : "post", 
+						dataType : "json", 
+						data: param, 
+						success : function(data) { 
+							if(data.isSuccess) { 
+								$('#myModal').modal('hide');
+								//otable.fnDraw();
+								loadHtml('http://localhost:8080/menu/initList_menu.do');
+							} else { 
+							    var html="<div class='alert'>";
+								html+="<a class='close' data-dismiss='alert'>×</a>";
+								html+="<strong>错误!</strong> 修改菜单班次失败</div>";
+								$("#menuAddForm").append(html);
+							} 
+						} 
+				     }); 
+		
+	}
 </script>
 </html>

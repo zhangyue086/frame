@@ -236,7 +236,7 @@
 			
 			<!-- yuezhang add -->
 			<result name="initAdd">/html/menu/menu_add.jsp</result>
-			<result name="initEdit">/html/menu/menu_add.jsp</result>
+			<result name="initEdit">/html/menu/menu_edit.jsp</result>
 			<result name="initDelete">/html/menu/menu_delete.jsp</result>
 			
 			<result name="list">/html/menu/menu_list.jsp</result>
