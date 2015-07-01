@@ -22,4 +22,6 @@
 	<bean id="userAction" class="com.zline.zlogistics.web.action.UserAction" scope="prototype"></bean>
 	
 
+	<bean id="menuAction" class="com.zline.zlogistics.web.action.MenuAction" scope="prototype"></bean>
+
 </beans>

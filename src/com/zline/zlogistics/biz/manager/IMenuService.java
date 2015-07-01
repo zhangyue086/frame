@@ -12,4 +12,16 @@ public interface IMenuService
 	 * @return
 	 */
 	public List<Menu> findAllMenu();
+
+	public Menu findById(Long id);
+	
+	void saveMenu(Menu menu);
+	
+	void updateMenu(Menu menu);
+	
+	List<Menu> queryList(Menu menu);
+	
+	Integer queryListCount(Menu menu);
+	
+	
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
 <% 
 String rc = request.getContextPath(); 
 request.setAttribute("path",rc);
@@ -33,7 +34,7 @@ request.setAttribute("path",rc);
 					<a href="#">系统管理</a>
 					<i class="icon-angle-right"></i>
 				</li>
-				<li><a href="#">用户管理</a></li>
+				<li><a href="#">菜单管理</a></li>
 			</ul>
 			<!-- END PAGE TITLE & BREADCRUMB-->
 		</div>
@@ -81,19 +82,40 @@ request.setAttribute("path",rc);
 						</div>
 					</div>
 					
+					
 					<table class="table table-striped table-bordered table-hover table-full-width" id="mydemo">
 						<thead>
 							<tr>
-								<th>用户ID</th>
-								<th>姓名</th>
-							    <th>登录名</th>
-							    <th>手机号</th>
+								<th>菜单ID</th>
+								<th>菜单名字</th>
+								<th>菜单URL</th>
+							    <th>父ID</th>
+							    <th>菜单排序ID</th>
 							    <th>创建时间</th>
 							    <th>最后更新时间</th>
 							    <th>操作</th>
 							</tr>
 						</thead>
+						
+						<c:forEach items="${menuList}" var="menu">
+						<tr>
+							<td>${menu.menuId}</td>
+							<td>${menu.menuName}</td>
+							<td>${menu.menuUrl}</td>
+							<td>${menu.menuFather}</td>
+							<td>${menu.menuOrder}</td>
+							<td>${menu.createTime}</td>
+							<td>${menu.lastUpdateTime}</td>
+							<td>
+							<a class='btn mini purple' id='editMenuInit'  href='#' data-url='initEdit_menu.do?menu.menuId=${menu.menuId}'><i class='icon-edit'></i>修改</a>
+							<a class='btn mini red' id='deleteMenuInit' data-toggle='modal' href='#myModal' data-url='initDelete_menu.do?menu.menuId=${menu.menuId}'><i class='icon-trash'></i>删除</a>
+							</td>
+						</tr>
+						</c:forEach>
+						
 					</table>
+					
+					
 				</div>
 			</div>
 			<!-- END SAMPLE FORM PORTLET-->			
@@ -103,78 +125,23 @@ request.setAttribute("path",rc);
 </div>
 <!-- END PAGE CONTAINER--> 
 </body>
-<script>
-var otable;
-$('#search').click(function(){
-	otable.fnSettings().ajax={
-		"url": "list_user.do?now=" + new Date().getTime(),
-        "type": "POST",
-        "data":{
-	        /*
-        	 "station.cityId": $('#cityName').find("option:selected").val()
-       	 */
-	}};
-	otable.fnDraw();
-});
 
-jQuery(document).ready(function() { 
-	App.initUniform();
-	otable = $('#mydemo').dataTable({
-        "processing": true,
-        "serverSide": true,
-        "bLengthChange" : false,
-        "bFilter": false,
-        "bSort": false,
-        "ajax": {
-            "url": "list_user.do?now=" + new Date().getTime(),
-            "type": "POST",
-            "data":{
-                /**
-            	 "station.cityId": $('#cityName').find("option:selected").val()
-           	 */
-            }
-        },
-        "columns": [
-                    {"data":"userId","bVisible":false},
-                    {"data": "userName"},
-                    {"data": "name"},
-                    {"data": "mobile"},
-                    {"data": "createTime"},
-                    {"data": "lastUpdateTime"}
-                  ],
-        "columnDefs": [
-                       {
-                           "targets": [6],
-                           "data": "userId",
-                           "render": function(data, type, full) {
-                        	 var html = "<a class='btn mini purple' id='editUserInit'  href='#' data-url='initEdit_user.do?user.userId="+data+"'><i class='icon-edit'></i>修改</a>&nbsp;";
-                        	 html+= "<a class='btn mini red' id='deleteUserInit' data-toggle='modal' href='#myModal' data-url='initDelete_user.do?user.userId="+data+"'><i class='icon-trash'></i>删除</a>";
-                             return html;
-                           }
-                         }
-                     ]
-    });
+<SCRIPT type="text/javascript">
 
-
-    
-	$("#addUserInit").click(function(){
-	    loadHtml($(this).attr("data-url"));
-	});
-
-	$("#editUserInit").die().live('click',function(event){
+	$("#addMenuInit").click(function(){
 	    loadHtml($(this).attr("data-url"));
 	});
 	
-	$("#deleteUserInit").die().live('click',function(){
+	$("#editMenuInit").die().live('click',function(event){
+	    loadHtml($(this).attr("data-url"));
+	});
+	
+	$("#deleteMenuInit").die().live('click',function(){
 	    $("#myModal").load($(this).attr("data-url"));
 	});
 
-	
-	$("#cityName").select2({
-		placeholder: "选择城市",
-        allowClear: true
-	});
-	
-});
-</script>
+
+</SCRIPT>
+
+
 </html>

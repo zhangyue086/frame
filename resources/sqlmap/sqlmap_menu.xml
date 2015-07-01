@@ -2,15 +2,163 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="menu">
+
+
+	<resultMap type="com.zline.zlogistics.biz.dal.entity.Menu" id="menuResult" >
+		<id column="menu_id" property="menuId"/>
+		<result column="menu_name" property="menuName"/>
+		<result column="menu_url" property="menuUrl"/>
+		<result column="menu_father" property="menuFather"/>
+		<result column="menu_order" property="menuOrder"/>
+		<result column="create_time" property="createTime"/>
+		<result column="createId" property="createId"/>
+		<result column="update_time" property="lastUpdateTime"/>
+		<result column="lastUpdateId" property="lastUpdateId"/>
+		<result column="isDeleted" property="isDeleted"/>
+	</resultMap>
+   
+   
    <select id="selectAllMenu" resultType="com.zline.zlogistics.biz.dal.entity.Menu">
        SELECT
   menu_id     AS menuId,
   menu_name   AS menuName,
   menu_url    AS menuUrl,
   menu_father AS menuFather,
-  menu_order as menuOrder
+  menu_order as menuOrder,
+  create_time as createTime,
+  update_time as lastUpdateTime
 FROM zlogistics.menu
    
    </select>
+   
+   
+   <!-- 根据菜单id查找菜单对象 -->
+   <select id="findById" parameterType="long" 
+		resultMap="menuResult"> 
+		select 
+		  menu_id     AS menuId,
+		  menu_name   AS menuName,
+		  menu_url    AS menuUrl,
+		  menu_father AS menuFather,
+		  menu_order as menuOrder,
+		  create_time as createTime,
+  		  update_time as lastUpdateTime
+		from zlogistics.menu 
+		where is_deleted = 0 and menu_id = #{menuId}
+	</select>
+	
+	
+	<!-- 新增菜单 -->
+	<insert id="save" parameterType="com.zline.zlogistics.biz.dal.entity.Menu"
+		useGeneratedKeys="true" keyProperty="menuId">
+		insert into zlogistics.user(
+			menu_id,
+			menu_name,
+			menu_url,
+			menu_father,
+			menu_order,
+			create_time,
+			create_id,
+			update_time,
+			update_id,
+			is_deleted,
+			data_version
+		)values(
+			#{menuId},
+			#{menuName},
+			#{meanUrl},
+			#{menuFather},
+			#{menuOrder},
+			now(),
+			1,
+			now(),
+			1,
+			0,
+			0
+		)
+	</insert>
+	
+	
+	<select id="queryList" parameterType="com.zline.zlogistics.biz.dal.entity.Menu" 
+		resultMap="menuResult">
+		       SELECT
+				  menu_id     AS menuId,
+				  menu_name   AS menuName,
+				  menu_url    AS menuUrl,
+				  menu_father AS menuFather,
+				  menu_order as menuOrder,
+				  create_time as createTime,
+				  update_time as lastUpdateTime
+				FROM zlogistics.menu t1
+		<trim prefix="where" prefixOverrides="and\or">
+			t1.is_deleted = 0
+			<if test="menuName != null and menuName != ''">
+				and t1.menu_name like concat('%',#{menuName},'%')
+			</if>
+			<if test="menuUrl != null and menuUrl != ''">
+				and t1.menu_url like concat('%',#{menuUrl},'%')
+			</if>
+			<if test="menuOrder != null and menuOrder != ''">
+				and t1.menu_order =#{menuOrder}
+			</if>
+			<if test="menuFather != null and menuFather != ''">
+				and t1.menu_father =#{menuFather}
+			</if>
+		</trim>
+		<if test="firstRow != null">
+		limit #{firstRow},#{pageRows}
+		</if>
+	</select>
+	
+	<select id="queryListCount" parameterType="com.zline.zlogistics.biz.dal.entity.Menu" 
+		resultType="int">
+		 SELECT
+				count (*)
+				FROM zlogistics.menu t1
+		<trim prefix="where" prefixOverrides="and\or">
+			t1.is_deleted = 0
+			<if test="menuName != null and menuName != ''">
+				and t1.menu_name like concat('%',#{menuName},'%')
+			</if>
+			<if test="menuUrl != null and menuUrl != ''">
+				and t1.menu_url like concat('%',#{menuUrl},'%')
+			</if>
+			<if test="menuOrder != null and menuOrder != ''">
+				and t1.menu_order =#{menuOrder}
+			</if>
+			<if test="menuFather != null and menuFather != ''">
+				and t1.menu_father =#{menuFather}
+			</if>
+		</trim>
+		<if test="firstRow != null">
+		limit #{firstRow},#{pageRows}
+		</if>
+	</select>
+	
+	
+	<update id="update" parameterType="com.zline.zlogistics.biz.dal.entity.Menu">
+		update zlogistics.menu
+		<trim prefix="set" prefixOverrides=",">
+			<if test="menuName != null   and menuName != ''">
+				menu_name = #{menuName}
+			</if>
+			<if test="menuUrl != null  and menuUrl != '' ">
+				,menu_url = #{menuUrl}
+			</if>
+			<if test="menuOrder != null">
+				,menu_order = #{menuOrder}
+			</if>
+			<if test="menuFather != null   and menuFather != ''">
+				,menu_father = #{menuFather}
+			</if>
+			<if test="isDeleted != null   and isDeleted != '' ">
+				,is_deleted = #{isDeleted}
+			</if>
+		</trim>
+		where menu_id = #{menuId}
+	</update>
+   
+   
+   
 	
 </mapper>
