@@ -20,27 +20,26 @@ request.setAttribute("path",rc);
 </div>
 
 <div class="modal-body">
-	是否确认删除   菜单<span class="label label-important">${user.userName}</span>
+	是否确认删除   菜单<span class="label label-important">${menu.menuName}</span>
 	<p></p>
 </div>
 
 <div class="modal-footer">
 	<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-	<button data-dismiss="modal" class="btn blue" onclick="deleteUser(${user.userId})">确定</button>
+	<button data-dismiss="modal" class="btn blue" onclick="deleteMenu(${menu.menuId})">确定</button>
 </div>
 </body>
 <script type="text/javascript">
 jQuery(document).ready(function() {    
 	   UIGeneral.init();
 });
-function deleteUser(id){
-	$.post('delete_user.do',{"user.userId":id},function(data){
+function deleteMenu(id){
+	$.post('delete_menu.do',{"menu.menuId":id},function(data){
 		if(data.isSuccess){
-			alert('删除用户成功');
-			otable.fnDraw();
+			alert('删除菜单成功');
 			$('#myModal').modal('hide');
 		}else{
-			alert('删除配用户失败');
+			alert('删除菜单失败');
 			$('#myModal').modal('hide');
 		}
 	},'json');

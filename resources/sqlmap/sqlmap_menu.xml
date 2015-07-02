@@ -14,7 +14,7 @@
 		<result column="createId" property="createId"/>
 		<result column="update_time" property="lastUpdateTime"/>
 		<result column="lastUpdateId" property="lastUpdateId"/>
-		<result column="isDeleted" property="isDeleted"/>
+		<result column="is_deleted" property="isDeleted"/>
 	</resultMap>
    
    
@@ -27,6 +27,7 @@
   menu_order as menuOrder
  
 FROM zlogistics.menu
+where is_deleted = 0
    
    </select>
    
@@ -50,7 +51,7 @@ FROM zlogistics.menu
 	<!-- 新增菜单 -->
 	<insert id="save" parameterType="com.zline.zlogistics.biz.dal.entity.Menu"
 		useGeneratedKeys="true" keyProperty="menuId">
-		insert into zlogistics.user(
+		insert into zlogistics.menu(
 			menu_id,
 			menu_name,
 			menu_url,
@@ -65,7 +66,7 @@ FROM zlogistics.menu
 		)values(
 			#{menuId},
 			#{menuName},
-			#{meanUrl},
+			#{menuUrl},
 			#{menuFather},
 			#{menuOrder},
 			now(),

@@ -239,7 +239,10 @@
 			<result name="initEdit">/html/menu/menu_edit.jsp</result>
 			<result name="initDelete">/html/menu/menu_delete.jsp</result>
 			
-			<result name="list">/html/menu/menu_list.jsp</result>
+			<result name="list" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
 			
 			<result name="add" type="json">
 				<param name="root">message</param>
@@ -256,7 +259,36 @@
 		</action>
 	</package>
 	
-	
+	<!-- 角色管理 -->
+	<package name="role" extends="fatherPackage">
+		<action name="*_role" class="roleAction" method="{1}">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="initList">/html/menu/menu_list.jsp</result>
+			
+			<!-- yuezhang add -->
+			<result name="initAdd">/html/menu/menu_add.jsp</result>
+			<result name="initEdit">/html/menu/menu_edit.jsp</result>
+			<result name="initDelete">/html/menu/menu_delete.jsp</result>
+			
+			<result name="list" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			
+			<result name="add" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="edit" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+	</package>
 	
 	
 	

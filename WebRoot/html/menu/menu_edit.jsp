@@ -71,9 +71,12 @@ request.setAttribute("path",rc);
 </body>
 <script>
 
+jQuery(document).ready(function() {    
+	   UIGeneral.init();
+});
+
 	function menuAdd(){
-		$("#menuAddForm").submit();
-		
+		//$("#menuAddForm").submit();
 		//loadHtml('http://localhost:8080/menu/initList_menu.do');
 		var param = $("#menuAddForm").serialize(); 
 				     $.ajax({ 
@@ -84,12 +87,10 @@ request.setAttribute("path",rc);
 						success : function(data) { 
 							if(data.isSuccess) { 
 								$('#myModal').modal('hide');
-								//otable.fnDraw();
-								loadHtml('http://localhost:8080/menu/initList_menu.do');
 							} else { 
 							    var html="<div class='alert'>";
 								html+="<a class='close' data-dismiss='alert'>×</a>";
-								html+="<strong>错误!</strong> 修改菜单班次失败</div>";
+								html+="<strong>错误!</strong> 修改菜单失败</div>";
 								$("#menuAddForm").append(html);
 							} 
 						} 

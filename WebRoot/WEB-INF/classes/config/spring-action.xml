@@ -23,5 +23,6 @@
 	
 
 	<bean id="menuAction" class="com.zline.zlogistics.web.action.MenuAction" scope="prototype"></bean>
+	<bean id="roleAction" class="com.zline.zlogistics.web.action.RoleAction" scope="prototype"></bean>
 
 </beans>
