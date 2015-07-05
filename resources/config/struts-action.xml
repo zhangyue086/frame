@@ -190,110 +190,6 @@
 		</action>
 	</package>
 	
-	
-	
-	
-	
-	
-	<!-- 用户管理 -->
-	<package name="user" extends="fatherPackage">
-		<action name="*_user" class="userAction" method="{1}">
-			<interceptor-ref name="defaultStack"></interceptor-ref>
-			<result name="initList">/html/user/user_list.jsp</result>
-			
-			<!-- yuezhang add -->
-			<result name="initAdd">/html/user/user_add.jsp</result>
-			<result name="initEdit">/html/user/user_add.jsp</result>
-			<result name="initDelete">/html/user/user_delete.jsp</result>
-			
-			<result name="list" type="json">
-				<param name="root">returnObject</param>
-				<param name="contentType">text/html</param>
-			</result>
-			
-			<result name="add" type="json">
-				<param name="root">message</param>
-				<param name="contentType">text/html</param>
-			</result>
-			
-			<result name="edit" type="json">
-				<param name="root">message</param>
-				<param name="contentType">text/html</param>
-			</result>
-			<result name="delete" type="json">
-				<param name="root">message</param>
-				<param name="contentType">text/html</param>
-			</result>
-		</action>
-	</package>
-	
-	
-	<!-- 菜单管理 -->
-	<package name="menu" extends="fatherPackage">
-		<action name="*_menu" class="menuAction" method="{1}">
-			<interceptor-ref name="defaultStack"></interceptor-ref>
-			<result name="initList">/html/menu/menu_list.jsp</result>
-			
-			<!-- yuezhang add -->
-			<result name="initAdd">/html/menu/menu_add.jsp</result>
-			<result name="initEdit">/html/menu/menu_edit.jsp</result>
-			<result name="initDelete">/html/menu/menu_delete.jsp</result>
-			
-			<result name="list" type="json">
-				<param name="root">returnObject</param>
-				<param name="contentType">text/html</param>
-			</result>
-			
-			<result name="add" type="json">
-				<param name="root">message</param>
-				<param name="contentType">text/html</param>
-			</result>
-			<result name="edit" type="json">
-				<param name="root">message</param>
-				<param name="contentType">text/html</param>
-			</result>
-			<result name="delete" type="json">
-				<param name="root">message</param>
-				<param name="contentType">text/html</param>
-			</result>
-		</action>
-	</package>
-	
-	<!-- 角色管理 -->
-	<package name="role" extends="fatherPackage">
-		<action name="*_role" class="roleAction" method="{1}">
-			<interceptor-ref name="defaultStack"></interceptor-ref>
-			<result name="initList">/html/menu/menu_list.jsp</result>
-			
-			<!-- yuezhang add -->
-			<result name="initAdd">/html/menu/menu_add.jsp</result>
-			<result name="initEdit">/html/menu/menu_edit.jsp</result>
-			<result name="initDelete">/html/menu/menu_delete.jsp</result>
-			
-			<result name="list" type="json">
-				<param name="root">returnObject</param>
-				<param name="contentType">text/html</param>
-			</result>
-			
-			<result name="add" type="json">
-				<param name="root">message</param>
-				<param name="contentType">text/html</param>
-			</result>
-			<result name="edit" type="json">
-				<param name="root">message</param>
-				<param name="contentType">text/html</param>
-			</result>
-			<result name="delete" type="json">
-				<param name="root">message</param>
-				<param name="contentType">text/html</param>
-			</result>
-		</action>
-	</package>
-	
-	
-	
-	
-
 	<package name="waybill" extends="fatherPackage" namespace="/waybill">
 		<action name="*_waybill" class="waybillAction" method="{1}">
 			<interceptor-ref name="scopedModelDriven">
@@ -403,4 +299,133 @@
 			</result>
 		</action>
 	</package>
+	
+	
+	<!-- 用户管理 -->
+	<package name="user" extends="fatherPackage">
+		<action name="*_user" class="userAction" method="{1}">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="initList">/html/user/user_list.jsp</result>
+			
+			<!-- yuezhang add -->
+			<result name="initAdd">/html/user/user_add.jsp</result>
+			<result name="initEdit">/html/user/user_add.jsp</result>
+			<result name="initDelete">/html/user/user_delete.jsp</result>
+			
+			<result name="list" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			
+			<result name="add" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			
+			<result name="edit" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+	</package>
+	
+	
+	<!-- 菜单管理 -->
+	<package name="menu" extends="fatherPackage">
+		<action name="*_menu" class="menuAction" method="{1}">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="initList">/html/menu/menu_list.jsp</result>
+			
+			<!-- yuezhang add -->
+			<result name="initAdd">/html/menu/menu_add.jsp</result>
+			<result name="initEdit">/html/menu/menu_edit.jsp</result>
+			<result name="initDelete">/html/menu/menu_delete.jsp</result>
+			
+			<result name="list" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			
+			<result name="add" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="edit" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+	</package>
+	
+	<!-- 角色管理 -->
+	<package name="role" extends="fatherPackage">
+		<action name="*_role" class="roleAction" method="{1}">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="initList">/html/role/role_list.jsp</result>
+			
+			<result name="initAdd">/html/role/role_add.jsp</result>
+			<result name="initEdit">/html/role/role_add.jsp</result>
+			<result name="initDelete">/html/role/role_delete.jsp</result>
+			
+			<result name="list" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="add" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="edit" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+	</package>
+	
+	<!-- 角色-菜单管理 -->
+	<package name="roleMenu" extends="fatherPackage">
+		<action name="*_roleMenu" class="roleMenuAction" method="{1}">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="initList">/html/role/roleMenu_list.jsp</result>
+			
+			<result name="initAdd">/html/role/roleMenu_add.jsp</result>
+			<result name="initEdit">/html/role/roleMenu_add.jsp</result>
+			<result name="initDelete">/html/role/roleMenu_delete.jsp</result>
+			
+			<result name="list" type="json">
+				<param name="root">returnObject</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="add" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="edit" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action>
+	</package>
+	
+	
+	
+	
+
+	
 </struts>

@@ -3,7 +3,6 @@ package com.zline.zlogistics.biz.manager.impl;
 import java.util.List;
 
 import com.zline.zlogistics.biz.dal.base.BaseService;
-import com.zline.zlogistics.biz.dal.entity.DistributionMember;
 import com.zline.zlogistics.biz.dal.entity.User;
 import com.zline.zlogistics.biz.manager.IUserService;
 

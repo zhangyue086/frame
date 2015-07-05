@@ -15,7 +15,7 @@ import com.zline.zlogistics.web.common.DataTableReturnObject;
 public class MenuAction extends BaseAction
 {
 	private static final long serialVersionUID = 1L;
-	public Logger log = Logger.getLogger(MenuAction.class);
+	public Logger log = Logger.getLogger(RoleAction.class);
 	
 	private Message message;
 	private IMenuService menuService;

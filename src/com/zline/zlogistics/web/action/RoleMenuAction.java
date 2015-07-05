@@ -7,16 +7,14 @@ import org.apache.log4j.Logger;
 
 import com.zline.zlogistics.biz.dal.entity.City;
 import com.zline.zlogistics.biz.dal.entity.DistributionMember;
-import com.zline.zlogistics.biz.dal.entity.DistributionStation;
-import com.zline.zlogistics.biz.dal.entity.Role;
+import com.zline.zlogistics.biz.dal.entity.RoleMenu;
 import com.zline.zlogistics.biz.manager.ICityService;
 import com.zline.zlogistics.biz.manager.IDistributionMemberService;
-import com.zline.zlogistics.biz.manager.IDistributionStationService;
-import com.zline.zlogistics.biz.manager.IRoleService;
+import com.zline.zlogistics.biz.manager.IRoleMenuService;
 import com.zline.zlogistics.biz.util.Message;
 import com.zline.zlogistics.web.common.DataTableReturnObject;
 
-public class RoleAction extends BaseAction
+public class RoleMenuAction extends BaseAction
 {
 
 	private static final long serialVersionUID = 1L;
@@ -25,17 +23,15 @@ public class RoleAction extends BaseAction
 	private List<City> cityList;
 	
 	private DistributionMember member;
-	private DataTableReturnObject<Role> returnObject;
+	private DataTableReturnObject<RoleMenu> returnObject;
 	private String queryKeyWord;
 	private IDistributionMemberService distributionMemberService;
 	private String memberStatus;
 	
-	private List<DistributionStation> stationList;
 	private Message message;
-	private IDistributionStationService distributionStationService;
 	
-	private Role role;
-	private IRoleService roleService;
+	private RoleMenu roleMenu;
+	private IRoleMenuService roleMenuService;
 	
 	
 	
@@ -46,23 +42,17 @@ public class RoleAction extends BaseAction
 	}
 
 	public String list(){
-		if(null == role){
-			role = new Role();
+		if(null == roleMenu){
+			roleMenu = new RoleMenu();
 		}
 		String start = getRequest().getParameter("start");
 		String length = getRequest().getParameter("length");
-		role.setFirstRow(Integer.parseInt(start));
-		role.setPageRows(Integer.parseInt(length));
+		roleMenu.setFirstRow(Integer.parseInt(start));
+		roleMenu.setPageRows(Integer.parseInt(length));
 		
-		if(queryKeyWord!=null&&queryKeyWord.length()>0)
-		{
-			role.setRoleName(queryKeyWord);
-			
-		}
-		
-		Integer count = roleService.queryListCount(role);
-		List<Role> list = roleService.queryList(role);
-		returnObject = new DataTableReturnObject<Role>();
+		Integer count = roleMenuService.queryListCount(roleMenu);
+		List<RoleMenu> list = roleMenuService.queryList(roleMenu);
+		returnObject = new DataTableReturnObject<RoleMenu>();
 		returnObject.setData(list);
 		returnObject.setDraw(Integer.parseInt(getRequest().getParameter("draw") == null ? "0"
 				: getRequest().getParameter("draw")) + 1);
@@ -75,7 +65,7 @@ public class RoleAction extends BaseAction
 	
 	public String initAdd(){
 		cityList = cityService.queryList();
-		stationList = distributionStationService.queryList(new DistributionStation());
+		//stationList = distributionStationService.queryList(new DistributionStation());
 		return "initAdd";
 	}
 	
@@ -83,7 +73,7 @@ public class RoleAction extends BaseAction
 		message = new Message();
 		message.setIsSuccess(true);
 		try {
-			roleService.saveRole(role);
+			roleMenuService.saveRoleMenu(roleMenu);
 		} catch (Exception e) {
 			message.setIsSuccess(false);
 			log.error("添加角色失败"+e.getMessage());
@@ -93,8 +83,8 @@ public class RoleAction extends BaseAction
 	
 	
 	public String initEdit(){
-		Long id = role.getRoleId();
-		role = roleService.findById(id);
+		Long id = roleMenu.getId();
+		roleMenu = roleMenuService.findById(id);
 		return "initEdit";
 	}
 	
@@ -102,7 +92,7 @@ public class RoleAction extends BaseAction
 		message = new Message();
 		message.setIsSuccess(true);
 		try {
-			roleService.updateRole(role);
+			roleMenuService.updateRoleMenu(roleMenu);
 		} catch (Exception e) {
 			message.setIsSuccess(false);
 			log.error("编辑角色失败"+e.getMessage());
@@ -111,8 +101,8 @@ public class RoleAction extends BaseAction
 	}
 	
 	public String initDelete(){
-		Long id = role.getRoleId();
-		role = roleService.findById(id);
+		Long id = roleMenu.getId();
+		roleMenu = roleMenuService.findById(id);
 		return "initDelete";
 	}
 	
@@ -120,9 +110,9 @@ public class RoleAction extends BaseAction
 		message = new Message();
 		message.setIsSuccess(true);
 		try {
-			role.setIsDeleted(1);
-			role.setLastUpdateTime(new Date());
-			roleService.updateRole(role);
+			roleMenu.setIsDeleted(1);
+			roleMenu.setLastUpdateTime(new Date());
+			roleMenuService.updateRoleMenu(roleMenu);
 		} catch (Exception e) {
 			message.setIsSuccess(false);
 			log.error("删除角色失败"+e.getMessage());
@@ -190,15 +180,6 @@ public class RoleAction extends BaseAction
 	}
 
 
-	public List<DistributionStation> getStationList() {
-		return stationList;
-	}
-
-
-	public void setStationList(List<DistributionStation> stationList) {
-		this.stationList = stationList;
-	}
-
 
 	public Message getMessage() {
 		return message;
@@ -209,44 +190,29 @@ public class RoleAction extends BaseAction
 		this.message = message;
 	}
 
-
-	public IDistributionStationService getDistributionStationService() {
-		return distributionStationService;
-	}
-
-
-	public void setDistributionStationService(
-			IDistributionStationService distributionStationService) {
-		this.distributionStationService = distributionStationService;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
-
-
-	public IRoleService getRoleService() {
-		return roleService;
-	}
-
-	public void setRoleService(IRoleService roleService) {
-		this.roleService = roleService;
-	}
-
-	public DataTableReturnObject<Role> getReturnObject() {
+	public DataTableReturnObject<RoleMenu> getReturnObject() {
 		return returnObject;
 	}
 
-	public void setReturnObject(DataTableReturnObject<Role> returnObject) {
+	public void setReturnObject(DataTableReturnObject<RoleMenu> returnObject) {
 		this.returnObject = returnObject;
 	}
 
+	public RoleMenu getRoleMenu() {
+		return roleMenu;
+	}
 
+	public void setRoleMenu(RoleMenu roleMenu) {
+		this.roleMenu = roleMenu;
+	}
+
+	public IRoleMenuService getRoleMenuService() {
+		return roleMenuService;
+	}
+
+	public void setRoleMenuService(IRoleMenuService roleMenuService) {
+		this.roleMenuService = roleMenuService;
+	}
 
 
 	

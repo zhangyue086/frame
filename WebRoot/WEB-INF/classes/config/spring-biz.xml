@@ -28,4 +28,12 @@
 	<bean id="userService" class="com.zline.zlogistics.biz.manager.impl.UserServiceImpl"></bean>
 	<bean id="lossService" class="com.zline.zlogistics.biz.manager.impl.ILossServiceImpl"></bean>
 	<bean id="orderStatusService" class="com.zline.zlogistics.biz.manager.impl.OrderStatusServiceImpl"></bean>
+	
+	
+	<bean id="roleService" class="com.zline.zlogistics.biz.manager.impl.RoleServiceImpl"></bean>
+	<bean id="roleMenuService" class="com.zline.zlogistics.biz.manager.impl.RoleMenuServiceImpl"></bean>
+	
+	
+	
+	
 </beans>

@@ -33,7 +33,7 @@ request.setAttribute("path",rc);
 					<a href="#">系统管理</a>
 					<i class="icon-angle-right"></i>
 				</li>
-				<li><a href="#">角色管理</a></li>
+				<li><a href="#">角色-菜单管理</a></li>
 			</ul>
 			<!-- END PAGE TITLE & BREADCRUMB-->
 		</div>
@@ -74,7 +74,7 @@ request.setAttribute("path",rc);
 								<div class="control-group">
 								<label class="control-label">&nbsp;</label>
 								<div class="controls">
-								<a href="#" data-url="initAdd_role.do" class="btn green" id="addRoleInit"><i class="icon-pencil"></i>添加角色</a>
+								<a href="#" data-url="initAdd_roleMenu.do" class="btn green" id="addRoleMenuInit"><i class="icon-pencil"></i>配置菜单</a>
 								</div>
 								</div>
 							</div>
@@ -84,9 +84,11 @@ request.setAttribute("path",rc);
 					<table class="table table-striped table-bordered table-hover table-full-width" id="mydemo">
 						<thead>
 							<tr>
+								<th>ID</th>
 								<th>角色ID</th>
 								<th>角色名</th>
-							    <th>角色描述</th>
+							    <th>菜单ID</th>
+							    <th>菜单名</th>
 							    <th>创建人</th>
 							    <th>创建时间</th>
 							    <th>最后更新人</th>
@@ -109,7 +111,7 @@ request.setAttribute("path",rc);
 var otable;
 $('#search').click(function(){
 	otable.fnSettings().ajax={
-		"url": "list_role.do?now=" + new Date().getTime(),
+		"url": "list_roleMenu.do?now=" + new Date().getTime(),
         "type": "POST",
         "data":{
 	        /*
@@ -128,7 +130,7 @@ jQuery(document).ready(function() {
         "bFilter": false,
         "bSort": false,
         "ajax": {
-            "url": "list_role.do?now=" + new Date().getTime(),
+            "url": "list_roleMenu.do?now=" + new Date().getTime(),
             "type": "POST",
             "data":{
                 /**
@@ -137,9 +139,11 @@ jQuery(document).ready(function() {
             }
         },
         "columns": [
-                    {"data":"roleId","bVisible":false},
+                    {"data":"id","bVisible":false},
+                    {"data": "roleId"},
                     {"data": "roleName"},
-                    {"data": "roleDescription"},
+                    {"data": "menuId"},
+                    {"data": "menuName"},
                     {"data": "createId"},
                     {"data": "createTime"},
                     {"data": "lastUpdateId"},
@@ -148,12 +152,11 @@ jQuery(document).ready(function() {
                   ],
         "columnDefs": [
                        {
-                           "targets": [8],
-                           "data": "roleId",
+                           "targets": [10],
+                           "data": "id",
                            "render": function(data, type, full) {
-                        	 var html = "<a class='btn mini purple' id='editRoleInit'  href='#' data-url='initEdit_role.do?role.roleId="+data+"'><i class='icon-edit'></i>修改</a>&nbsp;";
-                        	 html+= "<a class='btn mini red' id='deleteRoleInit' data-toggle='modal' href='#myModal' data-url='initDelete_role.do?role.roleId="+data+"'><i class='icon-trash'></i>删除</a>&nbsp;";
-                             html+="<a class='btn mini purple' id='editRoleInit'  href='#' data-url='initEdit_role.do?role.roleId="+data+"'><i class='icon-edit'></i>权限</a>"
+                        	 var html = "<a class='btn mini purple' id='editRoleMenuInit'  href='#' data-url='initEdit_roleMenu.do?roleMenu.id="+data+"'><i class='icon-edit'></i>修改</a>&nbsp;";
+                        	 html+= "<a class='btn mini red' id='deleteRoleMenuInit' data-toggle='modal' href='#myModal' data-url='initDelete_roleMenu.do?roleMenu.id="+data+"'><i class='icon-trash'></i>删除</a>&nbsp;";
                              return html;
                            }
                          }
@@ -162,15 +165,15 @@ jQuery(document).ready(function() {
 
 
     
-	$("#addRoleInit").click(function(){
+	$("#addRoleMenuInit").click(function(){
 	    loadHtml($(this).attr("data-url"));
 	});
 
-	$("#editRoleInit").die().live('click',function(event){
+	$("#editRoleMenuInit").die().live('click',function(event){
 	    loadHtml($(this).attr("data-url"));
 	});
 	
-	$("#deleteRoleInit").die().live('click',function(){
+	$("#deleteRoleMenuInit").die().live('click',function(){
 	    $("#myModal").load($(this).attr("data-url"));
 	});
 	
