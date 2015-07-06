@@ -8,10 +8,12 @@ import org.apache.log4j.Logger;
 import com.zline.zlogistics.biz.dal.entity.City;
 import com.zline.zlogistics.biz.dal.entity.DistributionMember;
 import com.zline.zlogistics.biz.dal.entity.DistributionStation;
+import com.zline.zlogistics.biz.dal.entity.Role;
 import com.zline.zlogistics.biz.dal.entity.User;
 import com.zline.zlogistics.biz.manager.ICityService;
 import com.zline.zlogistics.biz.manager.IDistributionMemberService;
 import com.zline.zlogistics.biz.manager.IDistributionStationService;
+import com.zline.zlogistics.biz.manager.IRoleService;
 import com.zline.zlogistics.biz.manager.IUserService;
 import com.zline.zlogistics.biz.util.Message;
 import com.zline.zlogistics.web.common.DataTableReturnObject;
@@ -36,6 +38,9 @@ public class UserAction extends BaseAction
 	
 	private User user;
 	private IUserService userService;
+	
+	private List<Role> roleList;
+	private IRoleService roleService;
 	
 	
 	
@@ -74,6 +79,8 @@ public class UserAction extends BaseAction
 	
 	
 	public String initAdd(){
+		
+		roleList = roleService.queryList(new Role());
 		cityList = cityService.queryList();
 		stationList = distributionStationService.queryList(new DistributionStation());
 		return "initAdd";
@@ -99,6 +106,7 @@ public class UserAction extends BaseAction
 	public String initEdit(){
 		Long id = user.getUserId();
 		user = userService.findById(id);
+		roleList = roleService.queryList(new Role());
 		cityList = cityService.queryList();
 		DistributionStation dis = new DistributionStation();
 		user.setCityId(user.getCityId());
@@ -260,6 +268,22 @@ public class UserAction extends BaseAction
 
 	public void setReturnObject(DataTableReturnObject<User> returnObject) {
 		this.returnObject = returnObject;
+	}
+
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
+	}
+
+	public IRoleService getRoleService() {
+		return roleService;
+	}
+
+	public void setRoleService(IRoleService roleService) {
+		this.roleService = roleService;
 	}
 
 	

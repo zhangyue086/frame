@@ -88,6 +88,7 @@ request.setAttribute("path",rc);
 								<th>姓名</th>
 							    <th>登录名</th>
 							    <th>手机号</th>
+							    <th>所属角色</th>
 							    <th>创建时间</th>
 							    <th>最后更新时间</th>
 							    <th>操作</th>
@@ -139,12 +140,13 @@ jQuery(document).ready(function() {
                     {"data": "userName"},
                     {"data": "name"},
                     {"data": "mobile"},
+                    {"data": "roleName"},
                     {"data": "createTime"},
                     {"data": "lastUpdateTime"}
                   ],
         "columnDefs": [
                        {
-                           "targets": [6],
+                           "targets": [7],
                            "data": "userId",
                            "render": function(data, type, full) {
                         	 var html = "<a class='btn mini purple' id='editUserInit'  href='#' data-url='initEdit_user.do?user.userId="+data+"'><i class='icon-edit'></i>修改</a>&nbsp;";

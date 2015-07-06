@@ -84,6 +84,19 @@ request.setAttribute("path",rc);
 								</div>
 							</div>
 							<div class="control-group">
+								<label class="control-label">角色<span class="required">*</span></label>
+								<div class="controls">
+									<select class="span6 m-wrap" name="user.roleId"
+										id="roleName">
+										<option></option>
+										<c:forEach items="${roleList}" var="role">
+											<option value="${role.roleId }"
+												<c:if test="${role.roleId == user.roleId}">selected</c:if>>${role.roleName }</option>
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
 								<label class="control-label">城市<span class="required">*</span></label>
 								<div class="controls">
 									<select class="span6 m-wrap" name="user.cityId"
@@ -156,12 +169,17 @@ request.setAttribute("path",rc);
 		jQuery(document).ready(function() {
 			// initiate layout and plugins
 			UserAdd.init();
+			$("#roleName").select2({
+				placeholder: "选择角色",
+			});
+			
 			$("#modalCity").select2({
 				placeholder: "选择城市",
 			});
 			$("#distributionStation").select2({
 				placeholder: "选择物流点",
 			});
+			
 			$("#modalCity").change(function() {
 				var cityId = $("#modalCity").find("option:selected").val();
 				$.post('stationForCity_station.do',{cityId:cityId},function(data){
