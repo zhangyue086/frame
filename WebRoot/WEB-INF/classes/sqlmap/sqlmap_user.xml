@@ -60,11 +60,8 @@
 		t1.last_update_id as lastUpdateId,
 		t1.is_deleted
 		from zlogistics.user t1
-		join zlogistics.distribution_station t2
-		on t1.station_id =
-		t2.distribution_station_id
-		join zlogistics.city t3
-		on t1.city_id = t3.city_id
+		join zlogistics.distribution_station t2 on t1.station_id =
+		t2.distribution_station_id join zlogistics.city t3 on t1.city_id = t3.city_id
 		left join role t4 on t4.role_id = t1.role_id
 		where t1.is_deleted = 0
 		and t1.user_id = #{userId}

@@ -136,15 +136,18 @@ request.setAttribute("path",rc);
 										value="${user.mobile}" />
 								</div>
 							</div>
+							
+							<c:if test="${empty user.userId}">
 							<div class="control-group">
 								<label class="control-label">密码<span class="required">*</span></label>
 								<div class="controls">
-									<input name="user.passWord" type="password"
+									<input name="user.passWord" type="password" 
 										class="span6 m-wrap"
 										 />
 									<span class="help-inline">用户登录密码（6-8位），不要将!@#$%^&*做为密码</span>
 								</div>
 							</div>
+							</c:if>
 							
 						</form>
 						<!-- END FORM-->

@@ -7,12 +7,18 @@ import org.apache.log4j.Logger;
 
 import com.zline.zlogistics.biz.dal.entity.City;
 import com.zline.zlogistics.biz.dal.entity.DistributionMember;
+import com.zline.zlogistics.biz.dal.entity.Menu;
+import com.zline.zlogistics.biz.dal.entity.Role;
 import com.zline.zlogistics.biz.dal.entity.RoleMenu;
 import com.zline.zlogistics.biz.manager.ICityService;
 import com.zline.zlogistics.biz.manager.IDistributionMemberService;
+import com.zline.zlogistics.biz.manager.IMenuService;
 import com.zline.zlogistics.biz.manager.IRoleMenuService;
+import com.zline.zlogistics.biz.manager.IRoleService;
 import com.zline.zlogistics.biz.util.Message;
 import com.zline.zlogistics.web.common.DataTableReturnObject;
+import com.zline.zlogistics.web.util.CommonUtil;
+import com.zline.zlogistics.web.view.MenuView;
 
 public class RoleMenuAction extends BaseAction
 {
@@ -32,7 +38,11 @@ public class RoleMenuAction extends BaseAction
 	
 	private RoleMenu roleMenu;
 	private IRoleMenuService roleMenuService;
+	private List<MenuView> menuList;
+	private IMenuService menuService;
 	
+	private List<Role> roleList;
+	private IRoleService roleService;
 	
 	
 	public String initList()
@@ -64,6 +74,11 @@ public class RoleMenuAction extends BaseAction
 	
 	
 	public String initAdd(){
+		roleList = roleService.queryList(new Role());
+		List<Menu> list = menuService.findAllMenu();
+		
+		menuList = CommonUtil.findMenuView(list);
+		
 		cityList = cityService.queryList();
 		//stationList = distributionStationService.queryList(new DistributionStation());
 		return "initAdd";
@@ -83,6 +98,10 @@ public class RoleMenuAction extends BaseAction
 	
 	
 	public String initEdit(){
+		roleList = roleService.queryList(new Role());
+		List<Menu> list = menuService.findAllMenu();
+		
+		menuList = CommonUtil.findMenuView(list);
 		Long id = roleMenu.getId();
 		roleMenu = roleMenuService.findById(id);
 		return "initEdit";
@@ -212,6 +231,38 @@ public class RoleMenuAction extends BaseAction
 
 	public void setRoleMenuService(IRoleMenuService roleMenuService) {
 		this.roleMenuService = roleMenuService;
+	}
+
+	public List<MenuView> getMenuList() {
+		return menuList;
+	}
+
+	public void setMenuList(List<MenuView> menuList) {
+		this.menuList = menuList;
+	}
+
+	public IMenuService getMenuService() {
+		return menuService;
+	}
+
+	public void setMenuService(IMenuService menuService) {
+		this.menuService = menuService;
+	}
+
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
+	}
+
+	public IRoleService getRoleService() {
+		return roleService;
+	}
+
+	public void setRoleService(IRoleService roleService) {
+		this.roleService = roleService;
 	}
 
 

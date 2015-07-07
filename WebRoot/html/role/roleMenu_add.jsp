@@ -57,6 +57,7 @@ request.setAttribute("path",rc);
 								<button class="close" data-dismiss="alert"></button>
 								表单验证成功！
 							</div>
+							
 							<c:if test="${roleMenu.id gt 0}">
 							<div class="control-group">
 								<label class="control-label">角色菜单ID<span class="required">*</span></label>
@@ -69,12 +70,28 @@ request.setAttribute("path",rc);
 							</c:if> 
 							
 							<div class="control-group">
+								<label class="control-label">角色<span class="required">*</span></label>
+								<div class="controls">
+									<select class="span6 m-wrap" name="roleMenu.roleId"
+										id="roleName">
+										<option></option>
+										<c:forEach items="${roleList}" var="role">
+											<option value="${role.roleId }"
+												<c:if test="${role.roleId == roleMenu.roleId}">selected</c:if>>${role.roleName }</option>
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+							
+							<%--<div class="control-group">
 								<label class="control-label">角色ID<span class="required">*</span></label>
 								<div class="controls">
 									<input name="roleMenu.roleId" type="text"
 										class="span6 m-wrap" value="${roleMenu.roleId}"/>
 								</div>
 							</div>
+							
+							--%>
 							
 							<div class="control-group">
 								<label class="control-label">菜单ID<span class="required">*</span></label>
