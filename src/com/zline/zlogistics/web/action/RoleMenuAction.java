@@ -38,11 +38,13 @@ public class RoleMenuAction extends BaseAction
 	
 	private RoleMenu roleMenu;
 	private IRoleMenuService roleMenuService;
-	private List<MenuView> menuList;
+	private List<MenuView> menuViewList;
 	private IMenuService menuService;
 	
 	private List<Role> roleList;
 	private IRoleService roleService;
+	
+	private List<Menu> menuList;
 	
 	
 	public String initList()
@@ -75,12 +77,12 @@ public class RoleMenuAction extends BaseAction
 	
 	public String initAdd(){
 		roleList = roleService.queryList(new Role());
-		List<Menu> list = menuService.findAllMenu();
+		menuList = menuService.findAllMenu();
 		
-		menuList = CommonUtil.findMenuView(list);
+		menuViewList = CommonUtil.findMenuView(menuList);
 		
 		cityList = cityService.queryList();
-		//stationList = distributionStationService.queryList(new DistributionStation());
+		
 		return "initAdd";
 	}
 	
@@ -98,10 +100,10 @@ public class RoleMenuAction extends BaseAction
 	
 	
 	public String initEdit(){
-		roleList = roleService.queryList(new Role());
-		List<Menu> list = menuService.findAllMenu();
 		
-		menuList = CommonUtil.findMenuView(list);
+		roleList = roleService.queryList(new Role());
+		menuList = menuService.findAllMenu();
+		menuViewList = CommonUtil.findMenuView(menuList);
 		Long id = roleMenu.getId();
 		roleMenu = roleMenuService.findById(id);
 		return "initEdit";
@@ -198,12 +200,9 @@ public class RoleMenuAction extends BaseAction
 		this.cityList = cityList;
 	}
 
-
-
 	public Message getMessage() {
 		return message;
 	}
-
 
 	public void setMessage(Message message) {
 		this.message = message;
@@ -233,12 +232,12 @@ public class RoleMenuAction extends BaseAction
 		this.roleMenuService = roleMenuService;
 	}
 
-	public List<MenuView> getMenuList() {
-		return menuList;
+	public List<MenuView> getMenuViewList() {
+		return menuViewList;
 	}
 
-	public void setMenuList(List<MenuView> menuList) {
-		this.menuList = menuList;
+	public void setMenuViewList(List<MenuView> menuViewList) {
+		this.menuViewList = menuViewList;
 	}
 
 	public IMenuService getMenuService() {
@@ -265,6 +264,14 @@ public class RoleMenuAction extends BaseAction
 		this.roleService = roleService;
 	}
 
+	public List<Menu> getMenuList() {
+		return menuList;
+	}
+
+	public void setMenuList(List<Menu> menuList) {
+		this.menuList = menuList;
+	}
+	
 
 	
 	

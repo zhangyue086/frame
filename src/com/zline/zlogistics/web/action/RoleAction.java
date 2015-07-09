@@ -8,10 +8,12 @@ import org.apache.log4j.Logger;
 import com.zline.zlogistics.biz.dal.entity.City;
 import com.zline.zlogistics.biz.dal.entity.DistributionMember;
 import com.zline.zlogistics.biz.dal.entity.DistributionStation;
+import com.zline.zlogistics.biz.dal.entity.Menu;
 import com.zline.zlogistics.biz.dal.entity.Role;
 import com.zline.zlogistics.biz.manager.ICityService;
 import com.zline.zlogistics.biz.manager.IDistributionMemberService;
 import com.zline.zlogistics.biz.manager.IDistributionStationService;
+import com.zline.zlogistics.biz.manager.IMenuService;
 import com.zline.zlogistics.biz.manager.IRoleService;
 import com.zline.zlogistics.biz.util.Message;
 import com.zline.zlogistics.web.common.DataTableReturnObject;
@@ -37,7 +39,8 @@ public class RoleAction extends BaseAction
 	private Role role;
 	private IRoleService roleService;
 	
-	
+	private IMenuService menuService;
+	private List<Menu> menuList;
 	
 	public String initList()
 	{
@@ -129,6 +132,16 @@ public class RoleAction extends BaseAction
 		}
 		return "delete";
 	}
+	
+	public String initAddResourse(){
+		
+		menuList = menuService.findAllMenu();
+		
+		return "initAddResourse";
+	}
+	
+	
+	
 	
 	public String getMemberStatus() {
 		return memberStatus;
@@ -246,6 +259,22 @@ public class RoleAction extends BaseAction
 		this.returnObject = returnObject;
 	}
 
+	public IMenuService getMenuService() {
+		return menuService;
+	}
+
+	public void setMenuService(IMenuService menuService) {
+		this.menuService = menuService;
+	}
+
+	public List<Menu> getMenuList() {
+		return menuList;
+	}
+
+	public void setMenuList(List<Menu> menuList) {
+		this.menuList = menuList;
+	}
+	
 
 
 

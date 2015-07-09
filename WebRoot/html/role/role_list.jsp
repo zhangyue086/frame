@@ -153,7 +153,7 @@ jQuery(document).ready(function() {
                            "render": function(data, type, full) {
                         	 var html = "<a class='btn mini purple' id='editRoleInit'  href='#' data-url='initEdit_role.do?role.roleId="+data+"'><i class='icon-edit'></i>修改</a>&nbsp;";
                         	 html+= "<a class='btn mini red' id='deleteRoleInit' data-toggle='modal' href='#myModal' data-url='initDelete_role.do?role.roleId="+data+"'><i class='icon-trash'></i>删除</a>&nbsp;";
-                             html+="<a class='btn mini purple' id='editRoleInit'  href='#' data-url='initEdit_role.do?role.roleId="+data+"'><i class='icon-edit'></i>权限</a>"
+                             html+="<a class='btn mini purple' id='initAddResourse'  href='#' data-url='initAddResourse_role.do?role.roleId="+data+"'><i class='icon-edit'></i>权限</a>"
                              return html;
                            }
                          }
@@ -169,6 +169,13 @@ jQuery(document).ready(function() {
 	$("#editRoleInit").die().live('click',function(event){
 	    loadHtml($(this).attr("data-url"));
 	});
+
+	$("#initAddResourse").die().live('click',function(event){
+	    loadHtml($(this).attr("data-url"));
+	});
+
+	
+	
 	
 	$("#deleteRoleInit").die().live('click',function(){
 	    $("#myModal").load($(this).attr("data-url"));

@@ -374,6 +374,7 @@
 			<result name="initAdd">/html/role/role_add.jsp</result>
 			<result name="initEdit">/html/role/role_add.jsp</result>
 			<result name="initDelete">/html/role/role_delete.jsp</result>
+			<result name="initAddResourse">/html/role/role_resourse_add.jsp</result>
 			
 			<result name="list" type="json">
 				<param name="root">returnObject</param>
@@ -391,6 +392,10 @@
 				<param name="root">message</param>
 				<param name="contentType">text/html</param>
 			</result>
+			
+			
+			
+			
 		</action>
 	</package>
 	

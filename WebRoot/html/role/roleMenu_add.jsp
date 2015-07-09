@@ -92,7 +92,7 @@ request.setAttribute("path",rc);
 							</div>
 							
 							--%>
-							
+							<%--
 							<div class="control-group">
 								<label class="control-label">菜单ID<span class="required">*</span></label>
 								<div class="controls">
@@ -100,6 +100,24 @@ request.setAttribute("path",rc);
 										value="${roleMenu.menuId}" />
 								</div>
 							</div>
+							--%>
+							
+							<div class="control-group">
+								<label class="control-label">菜单<span class="required">*</span></label>
+								<div class="controls">
+									<select class="span6 m-wrap" name="roleMenu.roleId"
+										id="roleName">
+										<option></option>
+										<c:forEach items="${menuList}" var="menu">
+											<option value="${menu.menuId}"
+												<c:if test="${menu.menuId == roleMenu.menuId}">selected</c:if>>${menu.menuName}</option>
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+							
+							
+							
 							
 							
 						</form>
