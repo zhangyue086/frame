@@ -1,6 +1,7 @@
 package com.zline.zlogistics.biz.manager;
 
 import java.util.List;
+import java.util.Map;
 
 import com.zline.zlogistics.biz.dal.entity.Menu;
 
@@ -22,6 +23,8 @@ public interface IMenuService
 	List<Menu> queryList(Menu menu);
 	
 	Integer queryListCount(Menu menu);
+	
+	List<Menu> selectMenuByMap(Map<String,Object> map);
 	
 	
 }

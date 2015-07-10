@@ -1,7 +1,9 @@
 package com.zline.zlogistics.web.action;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -17,6 +19,8 @@ import com.zline.zlogistics.biz.manager.IMenuService;
 import com.zline.zlogistics.biz.manager.IRoleService;
 import com.zline.zlogistics.biz.util.Message;
 import com.zline.zlogistics.web.common.DataTableReturnObject;
+import com.zline.zlogistics.web.util.CommonUtil;
+import com.zline.zlogistics.web.view.MenuView;
 
 public class RoleAction extends BaseAction
 {
@@ -41,6 +45,8 @@ public class RoleAction extends BaseAction
 	
 	private IMenuService menuService;
 	private List<Menu> menuList;
+	private List<Role> roleList;
+	private List<MenuView> menuViewList;
 	
 	public String initList()
 	{
@@ -134,14 +140,22 @@ public class RoleAction extends BaseAction
 	}
 	
 	public String initAddResourse(){
-		
+		Long id = role.getRoleId();
+		role = roleService.findById(id);
 		menuList = menuService.findAllMenu();
-		
+		roleList = roleService.queryList(new Role());
+		menuViewList = CommonUtil.findMenuView(menuList);
 		return "initAddResourse";
 	}
 	
 	
-	
+	public String getMeunByFatherIdAjax(){
+		String menuFather = request.getParameter("parentId");
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("menuFather", menuFather);
+		menuList = menuService.selectMenuByMap(map);
+		return "getMeunByFatherIdAjax";
+	}
 	
 	public String getMemberStatus() {
 		return memberStatus;
@@ -273,6 +287,22 @@ public class RoleAction extends BaseAction
 
 	public void setMenuList(List<Menu> menuList) {
 		this.menuList = menuList;
+	}
+
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
+	}
+
+	public List<MenuView> getMenuViewList() {
+		return menuViewList;
+	}
+
+	public void setMenuViewList(List<MenuView> menuViewList) {
+		this.menuViewList = menuViewList;
 	}
 	
 

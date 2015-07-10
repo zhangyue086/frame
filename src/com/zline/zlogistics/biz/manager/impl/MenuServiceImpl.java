@@ -1,6 +1,7 @@
 package com.zline.zlogistics.biz.manager.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import com.zline.zlogistics.biz.dal.base.BaseService;
 import com.zline.zlogistics.biz.dal.entity.Menu;
@@ -38,6 +39,11 @@ public class MenuServiceImpl extends BaseService implements IMenuService
 	@Override
 	public void updateMenu(Menu menu) {
 		getBaseDao().update("menu.update", menu);
+	}
+
+	@Override
+	public List<Menu> selectMenuByMap(Map<String, Object> map) {
+		return getBaseDao().selectList("menu.selectMenuByMap", map);
 	}
 
 }

@@ -393,7 +393,10 @@
 				<param name="contentType">text/html</param>
 			</result>
 			
-			
+			<result name="getMeunByFatherIdAjax" type="json">
+				<param name="root">message</param>
+				<param name="contentType">text/html</param>
+			</result>
 			
 			
 		</action>

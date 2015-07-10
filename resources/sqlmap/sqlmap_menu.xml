@@ -160,5 +160,36 @@ where is_deleted = 0
    
    
    
+   <select id="selectMenuByMap" parameterType="map" 
+		resultMap="menuResult">
+		       SELECT
+				  menu_id     AS menuId,
+				  menu_name   AS menuName,
+				  menu_url    AS menuUrl,
+				  menu_father AS menuFather,
+				  menu_order as menuOrder,
+				  create_time as createTime,
+				  update_time as lastUpdateTime
+				FROM zlogistics.menu t1
+		<trim prefix="where" prefixOverrides="and\or">
+			t1.is_deleted = 0,t1.update_time = now()
+			<if test="menuName != null and menuName != ''">
+				and t1.menu_name like concat('%',#{menuName},'%')
+			</if>
+			<if test="menuUrl != null and menuUrl != ''">
+				and t1.menu_url like concat('%',#{menuUrl},'%')
+			</if>
+			<if test="menuOrder != null and menuOrder != ''">
+				and t1.menu_order =#{menuOrder}
+			</if>
+			<if test="menuFather != null and menuFather != ''">
+				and t1.menu_father =#{menuFather}
+			</if>
+		</trim>
+		<if test="firstRow != null">
+		limit #{firstRow},#{pageRows}
+		</if>
+	</select>
+   
 	
 </mapper>
