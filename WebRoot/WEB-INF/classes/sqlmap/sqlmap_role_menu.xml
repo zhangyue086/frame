@@ -125,4 +125,26 @@
 	</update>
 
 
+	<!-- 根据角色id查询该角色所有的资源菜单 -->
+	<select id="selectMenuByRoleId" parameterType="long"
+		resultMap="roleMenuResult">
+		SELECT
+		t.id  AS id,
+		t.role_id AS roleId,
+		t.menu_id AS menuId,
+		t1.role_name AS roleName,
+		t2.menu_name AS menuName,
+		t.create_time AS createTime,
+		t.create_id AS createId,
+		t.last_update_time AS lastUpdateTime,
+		t.last_update_id AS lastUpdateId,
+		t.is_deleted AS isDeleted
+		from zlogistics.role_menu t
+		left join zlogistics.role t1 on t.role_id = t1.role_id
+		left join zlogistics.menu t2 on t.menu_id = t2.menu_id
+		where t.is_deleted = 0 and t.role_id = #{roleId}
+	</select>
+
+
+
 </mapper>

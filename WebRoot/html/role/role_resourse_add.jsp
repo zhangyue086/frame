@@ -10,7 +10,7 @@ request.setAttribute("path",rc);
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="${path}/js/shift.form.js"></script>
+
 
 
 <style>
@@ -155,107 +155,7 @@ $(function(){
 						<div class="tools"></div>
 					</div>
 					<div class="portlet-body">
-						<form id="shiftAddForm" class="form-horizontal">
-						
-						<input type="hidden" name ="shift.scheduleId" value="${shift.scheduleId}" />
-						<input type="hidden" name ="shift.distributionStationId"  value="${shift.distributionStationId}" />
-						<input type="hidden" name ="shift.shiftScheduleId" value="${shift.shiftScheduleId}" />
-						<input type="hidden" name ="shift.scheduleDate" value="${shift.scheduleDate}" />
-						
-
-
-<div class="tree well">
-<ul>
-	<li>
-		<span><i class="icon-folder-open"></i> 父菜单1</span>
-		<ul>
-			<li>
-				<span><i class="icon-minus-sign"></i> 子菜单1</span>
-			</li>
-			<li>
-				<span><i class="icon-minus-sign"></i> 子菜单1</span>
-			</li>
-			<li>
-				<span><i class="icon-minus-sign"></i> 子菜单1</span>
-			</li>
-			<li>
-				<span><i class="icon-minus-sign"></i> 子菜单1</span>
-			</li>
-		</ul>
-	</li>
-	<li>
-		<span><i class="icon-folder-open"></i> 父菜单2</span>
-		<ul>
-			<li>
-				<span><i class="icon-minus-sign"></i> 子菜单1</span>
-			</li>
-			<li>
-				<span><i class="icon-minus-sign"></i> 子菜单1</span>
-			</li>
-			<li>
-				<span><i class="icon-minus-sign"></i> 子菜单1</span>
-			<li>
-				<span><i class="icon-minus-sign"></i> 子菜单1</span>
-			</li>
-		</ul>
-	</li>
-	
-	<c:forEach items="${menuViewList}" var="menuView">
-	
-		<li>
-		<span><i class="icon-minus-sign"></i>${menuView.fatherMenu.menuName}<input type="checkbox" value="${menuView.fatherMenu.menuId}"/></span>
-			
-			<ul>
-			<c:forEach items="${menuView.childMenuList}" var="childMenu">
-			<li>
-				
-				<span><i class="icon-minus-sign"></i>${childMenu.menuName}<input  type="checkbox" value="${childMenu.menuId}"/></span>
-			</li>
-			</c:forEach>
-			</ul>
-		
-		
-		</li>
-	</c:forEach>
-	
-</ul>
-</div>
-
-
-<div class="wrap-page">
-	<div class="wrap-tree">
-		<div class=sub-tree><span><input id="cb4" type="checkbox" checked="checked">北京（京）</span></div>
-		<div class=sub-tree><span><input id="cb4" type="checkbox" checked="checked">上海（沪）</span></div>
-		<div class=sub-tree><span><input id="cb4" type="checkbox" checked="checked">天津（津）</span></div>
-		<div class=sub-tree><span><input id="cb4" type="checkbox" checked="checked">重庆（渝）</span></div>
-	</div>
-
-</div>
-
-<div class=tree_1 onmouseover="line(this)" onMouseOut="delline(this)" onClick="showtree('directly')">直辖市 <span id=span_directly style="color:gray">+</span></div>
-	<div id=directly_value class=tree_2 style="display:none">
-	<div class=tree_3>北京（京）</div>
-	<div class=tree_3>上海（沪）</div>
-	<div class=tree_3>天津（津）</div>
-	<div class=tree_3>重庆（渝）</div>
-</div>
-
-					
-						
-							<div class="control-group">
-								<label class="control-label">日期</label>
-								<label class="control-label">
-								${shift.scheduleDate }
-								</label>
-							</div>
-							<div class="control-group">
-								<label class="control-label">班次</label>
-								<label class="control-label">
-									${shift.scheduleName }
-								</label>
-							</div>
-							
-							
+						<form id="addOrUpadateResourseForm" class="form-horizontal">
 							<div class="control-group">
 								<label class="control-label">角色<span class="required">*</span></label>
 								<div class="controls">
@@ -269,50 +169,43 @@ $(function(){
 									</select>
 								</div>
 							</div>
-							
-							
-							
-							<div class="control-group">
-								<label class="control-label">父菜单<span class="required">*</span></label>
-								<div class="controls">
-									<select class="span6 m-wrap" name="role.roleId"
-										id="roleName">
-										<option></option>
-										<c:forEach items="${menuViewList}" var="menuView">
-											<option value="${menuView.fatherMenu.menuId}">${menuView.fatherMenu.menuName}
-											</option>
-										</c:forEach>
-									</select>
-								</div>
-							</div>
-							
-							<div class="control-group">
-								<label class="control-label">子菜单<span class="required">*</span></label>
-								<div class="controls">
-									
-								</div>
-							</div>
-							
-							
-							<div class="control-group">
-								<label class="control-label">资源分配</label>
-								<div class="controls">
-									<select multiple="multiple" name="shift.distributionMemberIds" id="distributionMemberIds" style="width:250px">
-										<c:forEach items="${menuList}" var="menu">
-											<option value="${menu.menuId}">${menu.menuName}
-											</option>
-										</c:forEach>
-										<c:forEach items="${listRight}" var="mem">
-											<option selected="selected"  value="${mem.distributionMemberId }">${mem.distributionMemberName }
-											</option>
-										</c:forEach>
-									</select>
-								</div>
-							</div>
+
+<div class="tree well">
+<ul>
+	<c:forEach items="${menuViewList}" var="menuView">
+		<li>
+		<span><i class="icon-minus-sign"></i>${menuView.fatherMenu.menuName}&nbsp;&nbsp;
+			<c:if test="${menuView.fatherMenu.selected == 1}">
+				<input type="checkbox" value="${menuView.fatherMenu.menuId}" checked="checked" name="selectedMenuId"/>
+			</c:if>
+			<c:if test="${menuView.fatherMenu.selected != 1}">
+				<input type="checkbox" value="${menuView.fatherMenu.menuId}" name="selectedMenuId"  name="selectedMenuId"/>
+			</c:if>
+		</span>
+			
+			<ul>
+			<c:forEach items="${menuView.childMenuList}" var="childMenu">
+			<li>
+				<span><i class="icon-minus-sign"></i>${childMenu.menuName}&nbsp;&nbsp;
+					<c:if test="${childMenu.selected == 1}">
+						<input  type="checkbox" value="${childMenu.menuId}" checked="checked" name="selectedMenuId"/>
+					</c:if>
+					<c:if test="${childMenu.selected  != 1}">
+						<input type="checkbox" value="${childMenu.menuId}" name="selectedMenuId"/>
+					</c:if>
+				</span>
+			</li>
+			</c:forEach>
+			</ul>
+			
+		</li>
+	</c:forEach>
+</ul>
+</div>
 						</form>
 						<div class="form-actions" style="">
 							<span class="span2">&nbsp;</span>
-							<button type="submit" class="btn blue" onclick="shiftAdd()">保存</button>
+							<button type="submit" class="btn blue" onclick="addOrUpadateResourse()">保存</button>
 							<button type="button" class="btn"
 								onclick="loadHtml('/role/initList_role.do')">返回</button>
 						</div>
@@ -323,17 +216,20 @@ $(function(){
 		</div>
 		<!-- END PAGE CONTENT-->
 	</div>
-	<!-- END PAGE CONTAINER-->
-	</div>
+	
+	
+	
+	
 </body>
+<script type="text/javascript" src="${path}/js/addResource.form.js"></script>
 <script type="text/javascript">
 $(function(){
 	ShiftAdd.init();
-	$('#distributionMemberIds').multiSelect();
-});
-function shiftAdd(){
 
-	$('#shiftAddForm').submit();
+});
+function addOrUpadateResourse(){
+
+	$('#addOrUpadateResourseForm').submit();
 }
 
 

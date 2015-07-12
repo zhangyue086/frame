@@ -9,6 +9,7 @@ public class Menu extends BaseEntity
 	private Long menuFather;
 	private Integer menuOrder;
 	private Integer menuVersion;
+	private String selected;//1表示已经是当前角色的菜单，0表示不是的。
 	public Long getMenuId()
 	{
 		return menuId;
@@ -69,4 +70,14 @@ public class Menu extends BaseEntity
 		this.menuOrder = menuOrder;
 	}
 
+	public String getSelected() {
+		return selected;
+	}
+
+	public void setSelected(String selected) {
+		this.selected = selected;
+	}
+	
+	
+	
 }

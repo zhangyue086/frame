@@ -34,4 +34,9 @@ public class RoleMenuServiceImpl extends BaseService implements IRoleMenuService
 		getBaseDao().update("roleMenu.update", roleMenu);
 	}
 
+	@Override
+	public List<RoleMenu> selectMenuByRoleId(Long roleId) {
+		return getBaseDao().selectList("roleMenu.selectMenuByRoleId",roleId);
+	}
+
 }

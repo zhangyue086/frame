@@ -17,6 +17,5 @@ public interface IRoleMenuService
 	
 	Integer queryListCount(RoleMenu roleMenu);
 	
-	
-	
+	List<RoleMenu> selectMenuByRoleId(Long roleId);
 }

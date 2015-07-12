@@ -1,5 +1,6 @@
 package com.zline.zlogistics.web.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,10 +13,12 @@ import com.zline.zlogistics.biz.dal.entity.DistributionMember;
 import com.zline.zlogistics.biz.dal.entity.DistributionStation;
 import com.zline.zlogistics.biz.dal.entity.Menu;
 import com.zline.zlogistics.biz.dal.entity.Role;
+import com.zline.zlogistics.biz.dal.entity.RoleMenu;
 import com.zline.zlogistics.biz.manager.ICityService;
 import com.zline.zlogistics.biz.manager.IDistributionMemberService;
 import com.zline.zlogistics.biz.manager.IDistributionStationService;
 import com.zline.zlogistics.biz.manager.IMenuService;
+import com.zline.zlogistics.biz.manager.IRoleMenuService;
 import com.zline.zlogistics.biz.manager.IRoleService;
 import com.zline.zlogistics.biz.util.Message;
 import com.zline.zlogistics.web.common.DataTableReturnObject;
@@ -47,6 +50,9 @@ public class RoleAction extends BaseAction
 	private List<Menu> menuList;
 	private List<Role> roleList;
 	private List<MenuView> menuViewList;
+	private IRoleMenuService roleMenuService;
+	
+	
 	
 	public String initList()
 	{
@@ -141,12 +147,91 @@ public class RoleAction extends BaseAction
 	
 	public String initAddResourse(){
 		Long id = role.getRoleId();
-		role = roleService.findById(id);
 		menuList = menuService.findAllMenu();
 		roleList = roleService.queryList(new Role());
+		
+		//当前角色所有的菜单
+		List<Long> listLong = new ArrayList<Long>();
+		List<RoleMenu> roleMenuList = roleMenuService.selectMenuByRoleId(id);
+		for (RoleMenu roleMenu : roleMenuList) {
+			listLong.add(roleMenu.getMenuId());
+		}
+		
 		menuViewList = CommonUtil.findMenuView(menuList);
+		for (MenuView menuView : menuViewList) {
+			
+			if(listLong.contains(menuView.getFatherMenu().getMenuId())){
+				menuView.getFatherMenu().setSelected("1");
+			}else{
+				menuView.getFatherMenu().setSelected("0");
+			}
+			
+			for (Menu menu : menuView.getChildMenuList()) {
+				if(listLong.contains(menu.getMenuId())){
+					menu.setSelected("1");
+				}else{
+					menu.setSelected("0");
+				}
+			}
+		}
+		
 		return "initAddResourse";
 	}
+	
+	/**
+	 * 为角色新增或者修改资源列表
+	 * @return
+	 */
+	public String addOrUpadateResourse(){
+		//获取角色id
+		//获取所有选中的selected--对应的menuId
+		Long roleId = role.getRoleId();
+		String[] menuIds  = request.getParameterValues("selectedMenuId");
+		
+		List<Long> newMenuIds = new ArrayList<Long>();
+		for(int i =0;i<menuIds.length;i++){
+			newMenuIds.add(Long.parseLong(menuIds[i]));
+		}
+		
+		List<Long> listLong = new ArrayList<Long>();
+		List<RoleMenu> roleMenuList = roleMenuService.selectMenuByRoleId(roleId);
+		for (RoleMenu roleMenu : roleMenuList) {
+			listLong.add(roleMenu.getMenuId());
+		}
+		
+		for(int i =0;i<menuIds.length;i++){
+			Long menuId = Long.valueOf(menuIds[i]);
+			if(!listLong.contains(menuId)){
+				//如果没有包含有的，就不新增了。
+				RoleMenu roleMenu  = new RoleMenu();
+				roleMenu.setRoleId(roleId);
+				roleMenu.setMenuId(menuId);
+				roleMenuService.saveRoleMenu(roleMenu);
+			}
+		}
+		
+		for(int i = 0;i<listLong.size();i++){
+			//如果新的菜单里面包含有旧的菜单，那么就不处理；如果不包含就把旧的菜单给删了。
+			if(!newMenuIds.contains(listLong.get(i))){
+				//这个id是菜单id
+				RoleMenu roleMenuTemp = new RoleMenu();  
+				roleMenuTemp.setMenuId(listLong.get(i));
+				roleMenuTemp.setRoleId(roleId);
+				
+				RoleMenu roleMenu = roleMenuService.queryList(roleMenuTemp).get(0);
+				roleMenu.setIsDeleted(1);
+				roleMenuService.updateRoleMenu(roleMenu);
+			}
+		}
+		
+		message = new Message();
+		message.setIsSuccess(true);
+		
+		return "addOrUpadateResourse";
+	}
+	
+	
+	
 	
 	
 	public String getMeunByFatherIdAjax(){
@@ -304,7 +389,15 @@ public class RoleAction extends BaseAction
 	public void setMenuViewList(List<MenuView> menuViewList) {
 		this.menuViewList = menuViewList;
 	}
-	
+
+	public IRoleMenuService getRoleMenuService() {
+		return roleMenuService;
+	}
+
+	public void setRoleMenuService(IRoleMenuService roleMenuService) {
+		this.roleMenuService = roleMenuService;
+	}
+
 
 
 
