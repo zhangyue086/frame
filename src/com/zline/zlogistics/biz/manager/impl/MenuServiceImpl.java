@@ -46,4 +46,9 @@ public class MenuServiceImpl extends BaseService implements IMenuService
 		return getBaseDao().selectList("menu.selectMenuByMap", map);
 	}
 
+	@Override
+	public List<Menu> selectMenuByUserRoleId(Long roleId) {
+		return getBaseDao().selectList("menu.selectMenuByUserRoleId", roleId);
+	}
+
 }

@@ -32,6 +32,7 @@
 		user_id AS userId,
 		user_name AS userName,
 		name as name,
+		role_id as roleId,
 		mobile AS mobile,
 		city_id AS cityId,
 		station_id AS stationId

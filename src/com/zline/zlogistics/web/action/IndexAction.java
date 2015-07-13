@@ -19,13 +19,19 @@ public class IndexAction extends BaseAction
 
 	public String execute()
 	{
-		List<Menu> list = menuService.findAllMenu();
+		//List<Menu> list = menuService.findAllMenu();
 		if (UserContext.getUser() != null)
 		{
 			userName = UserContext.getUser().getName();
+			
+			Long roleId = UserContext.getUser().getRoleId();
+			List<Menu> list = menuService.selectMenuByUserRoleId(roleId);
+			menuList = findMenuView(list);
+			return "index";
+		}else{
+			return "error";
 		}
-		menuList = findMenuView(list);
-		return "index";
+		
 	}
 
 	private List<MenuView> findMenuView(List<Menu> list)

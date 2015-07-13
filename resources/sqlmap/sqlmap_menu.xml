@@ -192,5 +192,25 @@ where is_deleted = 0
 	</select>
    
    
+   <!-- 根据角色id查询该角色所有的资源菜单 -->
+	<select id="selectMenuByUserRoleId" parameterType="long"
+		resultMap="menuResult">
+		       SELECT distinct
+				   t1.menu_id     AS menuId,
+				   t1.menu_name   AS menuName,
+				   t1.menu_url    AS menuUrl,
+				   t1.menu_father AS menuFather,
+				   t1.menu_order as menuOrder,
+				   t1.create_time as createTime,
+				   t1.update_time as lastUpdateTime
+				FROM zlogistics.menu t1
+				LEFT JOIN zlogistics.role_menu t2 ON t1.menu_id = t2.menu_id 
+				LEFT JOIN zlogistics.user t3 ON t2.role_id = t3.role_id
+				WHERE t2.is_deleted = 0 AND t1.is_deleted = 0  
+				AND t3.role_id = #{roleId}  
+	</select>
+   
+   
+   
 	
 </mapper>

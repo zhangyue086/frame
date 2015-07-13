@@ -25,6 +25,6 @@ public interface IMenuService
 	Integer queryListCount(Menu menu);
 	
 	List<Menu> selectMenuByMap(Map<String,Object> map);
-	
+	List<Menu> selectMenuByUserRoleId(Long roleId);
 	
 }
