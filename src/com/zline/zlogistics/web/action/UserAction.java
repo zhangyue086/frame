@@ -46,7 +46,6 @@ public class UserAction extends BaseAction
 	
 	public String initList()
 	{
-		cityList = cityService.queryList();
 		return "initList";
 	}
 

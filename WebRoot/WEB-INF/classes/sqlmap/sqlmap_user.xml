@@ -129,10 +129,8 @@
 		<trim prefix="where" prefixOverrides="and\or">
 			t1.is_deleted = 0
 			<if test="userName != null and userName != ''">
-				and t1.user_name like concat('%',#{userName},'%')
-			</if>
-			<if test="name != null and name != ''">
-				and t1.name like concat('%',#{name},'%')
+				and (t1.user_name like concat('%',#{userName},'%') 
+				or t1.name like concat('%',#{userName},'%') )
 			</if>
 			<if test="userId != null and userId != ''">
 				and t1.user_id =#{userId}

@@ -9,20 +9,17 @@ request.setAttribute("path",rc);
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
+<title>用户列表</title>
 </head>
 <body>
+
 <!-- BEGIN PAGE CONTAINER-->
 <div class="container-fluid">
+
 	<!-- BEGIN PAGE HEADER-->
 	<div class="row-fluid">
 		<div class="span12">
-			<!-- BEGIN STYLE CUSTOMIZER -->
-			
-			<!-- END BEGIN STYLE CUSTOMIZER --> 
-			<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-			<h3 class="page-title">
-			</h3>
+			<h3 class="page-title"></h3>
 			<ul class="breadcrumb" style="margin-bottom: 5px;">
 				<li>
 					<i class="icon-home"></i>
@@ -39,45 +36,39 @@ request.setAttribute("path",rc);
 		</div>
 	</div>
 	<!-- END PAGE HEADER-->
+	
 	<!-- BEGIN PAGE CONTENT-->
 	<div class="row-fluid">
 		<div class="span12">
+		
 			<!-- BEGIN SAMPLE FORM PORTLET-->   
 			<div class="portlet box">
 				<div class="portlet-body">
-					<div class="portlet" style="background-color:rgb(229,234,238);padding:10px">
+					<div style="background-color:rgb(229,234,238);padding:10px">
 						<div class="row-fluid" >
+							
 							<div class="span2">
 								<div class="control-group">
-									<label class="control-label">城市：</label>
-									<div class="controls">
-										<select name="cityName" id="cityName" class="span12" placeholder="选择城市" style="display:inline">
-											<option value=""></option>
-											<c:forEach items="${cityList}" var="city">
-												<option value="${city.cityId }">${city.cityName }</option>
-											</c:forEach>
-										</select>
-									</div>
+									<label class="control-label">姓名：</label>
+									<input name="queryKeyWord" id="queryKeyWord" type="text" placeholder="输登录名或者姓名查询"/>
 								</div>
 							</div>
 						   
 							<div class="span2">
 								<div class="control-group">
-								<label class="control-label">&nbsp;</label>
-								<div class="controls">
+								<label class="control-label">&nbsp;&nbsp;</label>
 									<button class="btn blue" id="search">
 									搜索 <i class="m-icon-swapright m-icon-white"></i></button>
 								</div>
-								</div>
 							</div>
+							
 							<div class="span2">
 								<div class="control-group">
-								<label class="control-label">&nbsp;</label>
-								<div class="controls">
-								<a href="#" data-url="initAdd_user.do" class="btn green" id="addUserInit"><i class="icon-pencil"></i>添加用户</a>
-								</div>
+									<label class="control-label">&nbsp;</label>
+									<a href="#" data-url="initAdd_user.do" class="btn green" id="addUserInit"><i class="icon-pencil"></i>添加用户</a>
 								</div>
 							</div>
+							
 						</div>
 					</div>
 					
@@ -85,8 +76,8 @@ request.setAttribute("path",rc);
 						<thead>
 							<tr>
 								<th>用户ID</th>
-								<th>姓名</th>
-							    <th>登录名</th>
+								<th>登录名</th>
+							    <th>姓名</th>
 							    <th>手机号</th>
 							    <th>所属角色</th>
 							    <th>创建时间</th>
@@ -95,6 +86,7 @@ request.setAttribute("path",rc);
 							</tr>
 						</thead>
 					</table>
+					
 				</div>
 			</div>
 			<!-- END SAMPLE FORM PORTLET-->			
@@ -111,9 +103,7 @@ $('#search').click(function(){
 		"url": "list_user.do?now=" + new Date().getTime(),
         "type": "POST",
         "data":{
-	        /*
-        	 "station.cityId": $('#cityName').find("option:selected").val()
-       	 */
+        	"queryKeyWord": $('#queryKeyWord').val()
 	}};
 	otable.fnDraw();
 });
@@ -130,9 +120,7 @@ jQuery(document).ready(function() {
             "url": "list_user.do?now=" + new Date().getTime(),
             "type": "POST",
             "data":{
-                /**
-            	 "station.cityId": $('#cityName').find("option:selected").val()
-           	 */
+            	"queryKeyWord": $('#queryKeyWord').val()
             }
         },
         "columns": [

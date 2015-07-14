@@ -148,7 +148,9 @@ public class RoleAction extends BaseAction
 	public String initAddResourse(){
 		Long id = role.getRoleId();
 		menuList = menuService.findAllMenu();
-		roleList = roleService.queryList(new Role());
+		
+		role = roleService.findById(id);
+		//roleList = roleService.queryList(new Role());
 		
 		//当前角色所有的菜单
 		List<Long> listLong = new ArrayList<Long>();

@@ -47,15 +47,17 @@ request.setAttribute("path",rc);
 			<div class="portlet box">
 				<div class="portlet-body">
 					<div class="portlet" style="background-color:rgb(229,234,238);padding:10px">
+					
 						<div class="row-fluid" >
+						
 							<div class="span2">
 								<div class="control-group">
-									<label class="control-label">城市：</label>
+									<label class="control-label">菜单名字：</label>
 									<div class="controls">
-										<select name="cityName" id="cityName" class="span12" placeholder="选择城市" style="display:inline">
+										<select name="cityName" id="menu" class="span12">
 											<option value=""></option>
-											<c:forEach items="${cityList}" var="city">
-												<option value="${city.cityId }">${city.cityName }</option>
+											<c:forEach items="${menuList}" var="menu">
+												<option value="${menu.menuId}">${menu.menuName}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -146,6 +148,12 @@ request.setAttribute("path",rc);
 	});
 
 
+	$("#menu").select2({
+		placeholder : "选择菜单",
+		allowClear : true
+	});
+
+	
 </SCRIPT>
 
 

@@ -45,7 +45,7 @@ request.setAttribute("path",rc);
 			<!-- BEGIN SAMPLE FORM PORTLET-->   
 			<div class="portlet box">
 				<div class="portlet-body">
-					<div class="portlet" style="background-color:rgb(229,234,238);padding:10px">
+					<div style="background-color:rgb(229,234,238);padding:10px">
 						<div class="row-fluid" >
 							<div class="span2">
 								<div class="control-group">

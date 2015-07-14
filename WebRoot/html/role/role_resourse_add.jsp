@@ -149,13 +149,18 @@ $(function(){
 		<div class="row-fluid">
 			<div class="span12">
 				<!-- BEGIN SAMPLE FORM PORTLET-->
-				<div class="portlet  box">
-					<div class="portlet-title">
-						<div class="caption"></div>
-						<div class="tools"></div>
-					</div>
+				<div class="portlet box">
 					<div class="portlet-body">
 						<form id="addOrUpadateResourseForm" class="form-horizontal">
+						<div class="control-group">
+								<label class="control-label">角色<span class="required">*</span></label>
+								<div class="controls">
+								<input type="hidden" value="${role.roleId}" name="role.roleId"/>
+								<input type="text" value="${role.roleName}" name="role.roleName" disabled="disabled"/>
+							
+								</div>
+						</div>		
+						<!--
 							<div class="control-group">
 								<label class="control-label">角色<span class="required">*</span></label>
 								<div class="controls">
@@ -169,7 +174,7 @@ $(function(){
 									</select>
 								</div>
 							</div>
-
+-->
 <div class="tree well">
 <ul>
 	<c:forEach items="${menuViewList}" var="menuView">
