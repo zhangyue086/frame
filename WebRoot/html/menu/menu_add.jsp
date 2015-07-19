@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
 String rc = request.getContextPath(); 
 request.setAttribute("path",rc);
@@ -15,7 +16,7 @@ request.setAttribute("path",rc);
 
 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 
-	<h3 id="myModalLabel3">菜单修改</h3>
+	<h3 id="myModalLabel3">新增菜单</h3>
 
 </div>
 
@@ -29,12 +30,18 @@ request.setAttribute("path",rc);
 			<button class="close" data-dismiss="alert"></button>
 			表单验证成功！
 		</div>
+		
+		<!--  
+		<c:if test="${empty menu.menuId}">
 		<div class="control-group">
 			<label class="control-label">菜单ID<span class="required">*</span></label>
 			<div class="controls">
 				<input name="menu.menuId" value="${menu.menuId}" type="text" />
 			</div>
 		</div>
+		</c:if>
+		-->
+		
 		<div class="control-group">
 			<label class="control-label">菜单名称<span class="required">*</span></label>
 			<div class="controls">
@@ -42,17 +49,26 @@ request.setAttribute("path",rc);
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">菜单URL<span class="required">*</span></label>
+			<label class="control-label">菜单URL</label>
 			<div class="controls">
 				<input name="menu.menuUrl" value="${menu.menuUrl}" type="text" />
 			</div>
 		</div>
+		
 		<div class="control-group">
-			<label class="control-label">父ID<span class="required">*</span></label>
-			<div class="controls">
-				<input name="menu.menuFather" value="${menu.menuFather}" type="text"    />
-			</div>
+			<label class="control-label">父菜单</label>
+					<div class="controls">
+					<select class="span6 m-wrap" name="menu.menuFather" >
+					<option></option>
+					<c:forEach items="${menuViewList}" var="menuView">
+							<option value="${menuView.fatherMenu.menuId}">${menuView.fatherMenu.menuName}</option>
+					</c:forEach>
+					</select>
+					</div>
 		</div>
+		
+		
+		
 		<div class="control-group">
 			<label class="control-label">菜单排序<span class="required">*</span></label>
 			<div class="controls">

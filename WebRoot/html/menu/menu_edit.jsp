@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
 String rc = request.getContextPath(); 
 request.setAttribute("path",rc);
@@ -29,30 +30,42 @@ request.setAttribute("path",rc);
 			<button class="close" data-dismiss="alert"></button>
 			表单验证成功！
 		</div>
+		
 		<div class="control-group">
 			<label class="control-label">菜单ID<span class="required">*</span></label>
 			<div class="controls">
-				<input name="menu.menuId" value="${menu.menuId}" type="text" />
+				<input name="menu.menuId" value="${menu.menuId}" type="text"/>
 			</div>
 		</div>
+		
 		<div class="control-group">
 			<label class="control-label">菜单名称<span class="required">*</span></label>
 			<div class="controls">
 				<input name="menu.menuName" value="${menu.menuName}" type="text"    />
 			</div>
 		</div>
+		
+		
 		<div class="control-group">
-			<label class="control-label">菜单URL<span class="required">*</span></label>
+			<label class="control-label">菜单URL</label>
 			<div class="controls">
 				<input name="menu.menuUrl" value="${menu.menuUrl}" type="text" />
 			</div>
 		</div>
+		
 		<div class="control-group">
-			<label class="control-label">父ID<span class="required">*</span></label>
+			<label class="control-label">父菜单</label>
 			<div class="controls">
-				<input name="menu.menuFather" value="${menu.menuFather}" type="text"    />
+				<select class="span6 m-wrap" name="menu.menuFather">
+				<option></option>
+				<c:forEach items="${menuViewList}" var="menuView">
+					<option value="${menuView.fatherMenu.menuId}"
+					<c:if test="${menuView.fatherMenu.menuId == menu.menuFather}">selected</c:if>>${menuView.fatherMenu.menuName}</option>
+				</c:forEach>
+				</select>
 			</div>
-		</div>
+	  </div>
+		
 		<div class="control-group">
 			<label class="control-label">菜单排序<span class="required">*</span></label>
 			<div class="controls">

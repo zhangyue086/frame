@@ -5,14 +5,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.zline.zlogistics.biz.dal.entity.City;
-import com.zline.zlogistics.biz.dal.entity.DistributionStation;
 import com.zline.zlogistics.biz.dal.entity.Menu;
-import com.zline.zlogistics.biz.dal.entity.User;
-import com.zline.zlogistics.biz.manager.ICityService;
 import com.zline.zlogistics.biz.manager.IMenuService;
 import com.zline.zlogistics.biz.util.Message;
 import com.zline.zlogistics.web.common.DataTableReturnObject;
+import com.zline.zlogistics.web.util.CommonUtil;
+import com.zline.zlogistics.web.view.MenuView;
 
 public class MenuAction extends BaseAction
 {
@@ -24,6 +22,9 @@ public class MenuAction extends BaseAction
 	private List<Menu> menuList;
 	private Menu menu;
 	private DataTableReturnObject<Menu> returnObject;
+	
+	private List<MenuView> menuViewList;
+	
 	
 	public String initList(){
 		menuList = menuService.findAllMenu();
@@ -38,6 +39,10 @@ public class MenuAction extends BaseAction
 	public String initEdit(){
 		Long id = menu.getMenuId();
 		menu = menuService.findById(id);
+		
+		menuList = menuService.findAllMenu();
+		menuViewList = CommonUtil.findMenuView(menuList);
+		
 		return "initEdit";
 	}
 	
@@ -76,6 +81,10 @@ public class MenuAction extends BaseAction
 	
 	
 	public String initAdd(){
+		
+		menuList = menuService.findAllMenu();
+		menuViewList = CommonUtil.findMenuView(menuList);
+		
 		return "initAdd";
 	}
 	
@@ -137,7 +146,15 @@ public class MenuAction extends BaseAction
 		this.returnObject = returnObject;
 	}
 
+	public List<MenuView> getMenuViewList() {
+		return menuViewList;
+	}
 
+	public void setMenuViewList(List<MenuView> menuViewList) {
+		this.menuViewList = menuViewList;
+	}
+
+	
 	
 	
 }
