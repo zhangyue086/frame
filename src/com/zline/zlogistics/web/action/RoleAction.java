@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zline.zlogistics.biz.dal.entity.City;
 import com.zline.zlogistics.biz.dal.entity.DistributionMember;
@@ -30,29 +31,36 @@ public class RoleAction extends BaseAction
 
 	private static final long serialVersionUID = 1L;
 	public Logger log = Logger.getLogger(DistributionMemberAction.class);
-	private ICityService cityService;
+	
 	private List<City> cityList;
 	
 	private DistributionMember member;
 	private DataTableReturnObject<Role> returnObject;
 	private String queryKeyWord;
-	private IDistributionMemberService distributionMemberService;
+	
 	private String memberStatus;
 	
 	private List<DistributionStation> stationList;
 	private Message message;
-	private IDistributionStationService distributionStationService;
-	
 	private Role role;
-	private IRoleService roleService;
 	
-	private IMenuService menuService;
 	private List<Menu> menuList;
 	private List<Role> roleList;
 	private List<MenuView> menuViewList;
-	private IRoleMenuService roleMenuService;
 	
 	
+	@Autowired
+	IRoleService roleService;
+	@Autowired
+	IMenuService menuService;
+	@Autowired
+	IRoleMenuService roleMenuService;
+	@Autowired
+	IDistributionStationService distributionStationService;
+	@Autowired
+	IDistributionMemberService distributionMemberService;
+	@Autowired
+	ICityService cityService;
 	
 	public String initList()
 	{
@@ -253,16 +261,6 @@ public class RoleAction extends BaseAction
 	}
 
 
-	public IDistributionMemberService getDistributionMemberService() {
-		return distributionMemberService;
-	}
-
-
-	public void setDistributionMemberService(
-			IDistributionMemberService distributionMemberService) {
-		this.distributionMemberService = distributionMemberService;
-	}
-
 	public String getQueryKeyWord() {
 		return queryKeyWord;
 	}
@@ -283,15 +281,6 @@ public class RoleAction extends BaseAction
 	}
 
 
-	public ICityService getCityService()
-	{
-		return cityService;
-	}
-
-	public void setCityService(ICityService cityService)
-	{
-		this.cityService = cityService;
-	}
 
 	public List<City> getCityList()
 	{
@@ -324,15 +313,6 @@ public class RoleAction extends BaseAction
 	}
 
 
-	public IDistributionStationService getDistributionStationService() {
-		return distributionStationService;
-	}
-
-
-	public void setDistributionStationService(
-			IDistributionStationService distributionStationService) {
-		this.distributionStationService = distributionStationService;
-	}
 
 	public Role getRole() {
 		return role;
@@ -344,13 +324,6 @@ public class RoleAction extends BaseAction
 
 
 
-	public IRoleService getRoleService() {
-		return roleService;
-	}
-
-	public void setRoleService(IRoleService roleService) {
-		this.roleService = roleService;
-	}
 
 	public DataTableReturnObject<Role> getReturnObject() {
 		return returnObject;
@@ -360,13 +333,6 @@ public class RoleAction extends BaseAction
 		this.returnObject = returnObject;
 	}
 
-	public IMenuService getMenuService() {
-		return menuService;
-	}
-
-	public void setMenuService(IMenuService menuService) {
-		this.menuService = menuService;
-	}
 
 	public List<Menu> getMenuList() {
 		return menuList;
@@ -391,16 +357,6 @@ public class RoleAction extends BaseAction
 	public void setMenuViewList(List<MenuView> menuViewList) {
 		this.menuViewList = menuViewList;
 	}
-
-	public IRoleMenuService getRoleMenuService() {
-		return roleMenuService;
-	}
-
-	public void setRoleMenuService(IRoleMenuService roleMenuService) {
-		this.roleMenuService = roleMenuService;
-	}
-
-
 
 
 	

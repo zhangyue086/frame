@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zline.zlogistics.biz.dal.entity.City;
 import com.zline.zlogistics.biz.dal.entity.DistributionMember;
@@ -23,25 +24,34 @@ public class UserAction extends BaseAction
 
 	private static final long serialVersionUID = 1L;
 	public Logger log = Logger.getLogger(DistributionMemberAction.class);
-	private ICityService cityService;
+
 	private List<City> cityList;
 	
 	private DistributionMember member;
 	private DataTableReturnObject<User> returnObject;
 	private String queryKeyWord;
-	private IDistributionMemberService distributionMemberService;
+
 	private String memberStatus;
 	
 	private List<DistributionStation> stationList;
 	private Message message;
-	private IDistributionStationService distributionStationService;
+
 	
 	private User user;
-	private IUserService userService;
+
 	
 	private List<Role> roleList;
-	private IRoleService roleService;
 	
+	@Autowired
+	IDistributionStationService distributionStationService;
+	@Autowired
+	IDistributionMemberService distributionMemberService;
+	@Autowired
+	IUserService userService;
+	@Autowired
+	IRoleService roleService;
+	@Autowired
+	ICityService cityService;
 	
 	
 	public String initList()
@@ -150,11 +160,6 @@ public class UserAction extends BaseAction
 	}
 	
 	
-	
-	
-	
-	
-	
 	public String getMemberStatus() {
 		return memberStatus;
 	}
@@ -164,15 +169,6 @@ public class UserAction extends BaseAction
 	}
 
 
-	public IDistributionMemberService getDistributionMemberService() {
-		return distributionMemberService;
-	}
-
-
-	public void setDistributionMemberService(
-			IDistributionMemberService distributionMemberService) {
-		this.distributionMemberService = distributionMemberService;
-	}
 
 	public String getQueryKeyWord() {
 		return queryKeyWord;
@@ -194,15 +190,6 @@ public class UserAction extends BaseAction
 	}
 
 
-	public ICityService getCityService()
-	{
-		return cityService;
-	}
-
-	public void setCityService(ICityService cityService)
-	{
-		this.cityService = cityService;
-	}
 
 	public List<City> getCityList()
 	{
@@ -235,30 +222,12 @@ public class UserAction extends BaseAction
 	}
 
 
-	public IDistributionStationService getDistributionStationService() {
-		return distributionStationService;
-	}
-
-
-	public void setDistributionStationService(
-			IDistributionStationService distributionStationService) {
-		this.distributionStationService = distributionStationService;
-	}
-
 	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public IUserService getUserService() {
-		return userService;
-	}
-
-	public void setUserService(IUserService userService) {
-		this.userService = userService;
 	}
 
 	public DataTableReturnObject<User> getReturnObject() {
@@ -277,13 +246,6 @@ public class UserAction extends BaseAction
 		this.roleList = roleList;
 	}
 
-	public IRoleService getRoleService() {
-		return roleService;
-	}
-
-	public void setRoleService(IRoleService roleService) {
-		this.roleService = roleService;
-	}
 
 	
 	

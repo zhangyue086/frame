@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.zline.zlogistics.biz.dal.entity.Menu;
 import com.zline.zlogistics.biz.manager.IMenuService;
 import com.zline.zlogistics.biz.util.UserContext;
@@ -13,10 +15,12 @@ import com.zline.zlogistics.web.view.MenuView;
 public class IndexAction extends BaseAction
 {
 	private static final long serialVersionUID = 5119144952247192726L;
-	private IMenuService menuService;
+	//private IMenuService menuService;
 	private List<MenuView> menuList;
 	private String userName;
-
+	
+	@Autowired
+	IMenuService menuService;
 	public String execute()
 	{
 		//List<Menu> list = menuService.findAllMenu();
@@ -90,7 +94,7 @@ public class IndexAction extends BaseAction
 
 	}
 
-	public IMenuService getMenuService()
+	/*public IMenuService getMenuService()
 	{
 		return menuService;
 	}
@@ -98,7 +102,7 @@ public class IndexAction extends BaseAction
 	public void setMenuService(IMenuService menuService)
 	{
 		this.menuService = menuService;
-	}
+	}*/
 
 	public List<MenuView> getMenuList()
 	{

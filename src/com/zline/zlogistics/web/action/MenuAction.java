@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zline.zlogistics.biz.dal.entity.Menu;
 import com.zline.zlogistics.biz.manager.IMenuService;
@@ -18,13 +19,13 @@ public class MenuAction extends BaseAction
 	public Logger log = Logger.getLogger(RoleAction.class);
 	
 	private Message message;
-	private IMenuService menuService;
+
 	private List<Menu> menuList;
 	private Menu menu;
 	private DataTableReturnObject<Menu> returnObject;
-	
 	private List<MenuView> menuViewList;
-	
+	@Autowired
+	IMenuService menuService;
 	
 	public String initList(){
 		menuList = menuService.findAllMenu();
@@ -100,26 +101,12 @@ public class MenuAction extends BaseAction
 		return "add";
 	}
 	
-	
-	
-	
-	
-	
-
 	public Message getMessage() {
 		return message;
 	}
 
 	public void setMessage(Message message) {
 		this.message = message;
-	}
-
-	public IMenuService getMenuService() {
-		return menuService;
-	}
-
-	public void setMenuService(IMenuService menuService) {
-		this.menuService = menuService;
 	}
 
 	public List<Menu> getMenuList() {

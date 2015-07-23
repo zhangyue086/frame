@@ -1,5 +1,7 @@
 package com.zline.zlogistics.web.action;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.zline.zlogistics.biz.dal.entity.User;
 import com.zline.zlogistics.biz.manager.IUserService;
 import com.zline.zlogistics.biz.util.UserContext;
@@ -11,8 +13,11 @@ public class LoginAction extends BaseAction
 
 	private String userName;
 	private String passWord;
-	private IUserService userService;
+	//private IUserService userService;
 
+	@Autowired
+	IUserService userService;
+	
 	public String userLogin()
 	{
 		String result = "login";
@@ -60,7 +65,7 @@ public class LoginAction extends BaseAction
 		this.passWord = passWord;
 	}
 
-	public IUserService getUserService()
+/*	public IUserService getUserService()
 	{
 		return userService;
 	}
@@ -68,6 +73,6 @@ public class LoginAction extends BaseAction
 	public void setUserService(IUserService userService)
 	{
 		this.userService = userService;
-	}
+	}*/
 
 }

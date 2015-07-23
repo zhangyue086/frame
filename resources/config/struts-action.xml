@@ -4,7 +4,7 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<package name="login" extends="struts-default">
-		<action name="login" class="loginAction" method="userLogin">
+		<action name="login" class="com.zline.zlogistics.web.action.LoginAction" method="userLogin">
 			<result name="loginSuccess">/welcome.jsp</result>
 			<result name="login">/html/global/login.jsp</result>
 		</action>
@@ -48,7 +48,7 @@
 	</package>
 
 	<package name="index" extends="fatherPackage">
-		<action name="index" class="indexAction">
+		<action name="index" class="com.zline.zlogistics.web.action.IndexAction">
 			<result name="index">/html/index.jsp</result>
 		</action>
 	</package>
@@ -57,7 +57,7 @@
 	<package name="distribution" extends="fatherPackage">
 	
 		<!-- 信息中心站点管理action -->
-		<action name="*_station" class="distributionStationAction"
+		<action name="*_station" class="com.zline.zlogistics.web.action.DistributionStationAction"
 			method="{1}">
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 			<result name="initlist">/html/distributioninfo/station_list.jsp</result>
@@ -92,7 +92,7 @@
 		</action>
 		
 		<!-- 信息中心配送员管理action -->
-		<action name="*_member" class="distributionMemberAction"
+		<action name="*_member" class="com.zline.zlogistics.web.action.DistributionMemberAction"
 			method="{1}">
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 			<result name="initlist">/html/distributioninfo/member_list.jsp</result>
@@ -303,7 +303,7 @@
 	
 	<!-- 用户管理 -->
 	<package name="user" extends="fatherPackage">
-		<action name="*_user" class="userAction" method="{1}">
+		<action name="*_user" class="com.zline.zlogistics.web.action.UserAction" method="{1}">
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 			<result name="initList">/html/user/user_list.jsp</result>
 			
@@ -336,7 +336,7 @@
 	
 	<!-- 菜单管理 -->
 	<package name="menu" extends="fatherPackage">
-		<action name="*_menu" class="menuAction" method="{1}">
+		<action name="*_menu" class="com.zline.zlogistics.web.action.MenuAction" method="{1}">
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 			<result name="initList">/html/menu/menu_list.jsp</result>
 			
@@ -367,7 +367,7 @@
 	
 	<!-- 角色管理 -->
 	<package name="role" extends="fatherPackage">
-		<action name="*_role" class="roleAction" method="{1}">
+		<action name="*_role" class="com.zline.zlogistics.web.action.RoleAction" method="{1}">
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 			<result name="initList">/html/role/role_list.jsp</result>
 			
