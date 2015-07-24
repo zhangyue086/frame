@@ -109,6 +109,9 @@ jQuery(document).ready(function() {
 								html+="<strong>错误!</strong> 增加菜单失败</div>";
 								$("#menuAddForm").append(html);
 							} 
+
+							loadHtml('menu/initList_menu.do');
+							
 						} 
 				     }); 
 		
