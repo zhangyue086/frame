@@ -3,9 +3,12 @@ package com.zline.zlogistics.web.action;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zline.zlogistics.biz.dal.entity.City;
 import com.zline.zlogistics.biz.dal.entity.DistributionMember;
 import com.zline.zlogistics.biz.dal.entity.DistributionStation;
@@ -17,6 +20,7 @@ import com.zline.zlogistics.biz.manager.IDistributionStationService;
 import com.zline.zlogistics.biz.manager.IRoleService;
 import com.zline.zlogistics.biz.manager.IUserService;
 import com.zline.zlogistics.biz.util.Message;
+import com.zline.zlogistics.test.RedisClient;
 import com.zline.zlogistics.web.common.DataTableReturnObject;
 
 public class UserAction extends BaseAction
@@ -53,13 +57,20 @@ public class UserAction extends BaseAction
 	@Autowired
 	ICityService cityService;
 	
+	@Resource
+	private RedisClient<String, String> redisClient;
+	
+	
 	
 	public String initList()
 	{
 		return "initList";
 	}
 
+	@SuppressWarnings("unchecked")
 	public String list(){
+		
+		//条件
 		if(null == user){
 			user = new User();
 		}
@@ -67,12 +78,18 @@ public class UserAction extends BaseAction
 		String length = getRequest().getParameter("length");
 		user.setFirstRow(Integer.parseInt(start));
 		user.setPageRows(Integer.parseInt(length));
-		
 		if(queryKeyWord!=null&&queryKeyWord.length()>0)
 		{
 			user.setUserName(queryKeyWord);
-			
 		}
+		JSONObject keyjson =(JSONObject) JSONObject.toJSON(user);
+		System.out.println("key:"+keyjson.toJSONString());
+	//结果集	
+	if(redisClient.get(keyjson.toJSONString())!=null)	{
+		returnObject=JSONObject.toJavaObject(JSONObject.parseObject(redisClient.get(keyjson.toJSONString())), DataTableReturnObject.class);
+		System.out.println("----------------------来自缓存");
+		//(redisClient.get("userList"), DataTableReturnObject.class);
+	}else{
 		
 		Integer count = userService.queryListCount(user);
 		List<User> list = userService.queryList(user);
@@ -82,6 +99,14 @@ public class UserAction extends BaseAction
 				: getRequest().getParameter("draw")) + 1);
 		returnObject.setRecordsTotal(count);
 		returnObject.setRecordsFiltered(count);
+		
+		JSONObject returnJson =(JSONObject) JSONObject.toJSON(returnObject);
+		JSONObject keyjsontemp =(JSONObject) JSONObject.toJSON(user);
+		redisClient.add(keyjsontemp.toJSONString(), returnJson.toJSONString());
+		
+		System.out.println("----------------------来自数据库");
+		
+	}
 		
 		return "list";
 	}

@@ -16,15 +16,17 @@
 	<!--读取配置项信息 -->
 	<context:property-placeholder location="classpath:meta_config/*.properties" />
 
-	<context:component-scan base-package="com.zline.zlogistics.biz.manager.impl;com.zline.zlogistics.web.action"/> 
+	<context:component-scan base-package="com.zline.zlogistics.biz.manager.impl;com.zline.zlogistics.web.action;com.zline.zlogistics.test"/> 
 
 	<import resource="classpath:config/spring-datasource.xml" />
 	<import resource="classpath:config/spring-dao.xml" />
 	<import resource="classpath:config/spring-biz.xml" />
+	<import resource="classpath:config/spring-redis.xml" />
 	
 	
 	
 	<!--  
+	<import resource="classpath:config/spring-redis.xml" />
 	<import resource="classpath:config/spring-action.xml" />
 	<import resource="classpath:config/spring-timer.xml" />
 	-->
